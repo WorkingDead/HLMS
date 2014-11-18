@@ -1,0 +1,882 @@
+@CHARSET "UTF-8";
+
+/* ################################### */
+/* Function Name
+/* ################################### */
+h3.fnName
+{
+	font: 17px 微軟正黑體, Microsoft JhengHei, arial, sans-serif;
+	color: #4B4B4B;
+	margin: 0 0 0 0;
+	padding: 0px 0px 0px 8px;
+	background-color: #F7F7F7;
+}
+
+/* ################################### */
+/* Login Style
+/* ################################### */
+div.loginArea
+{
+	margin-top: 5%;
+	margin-bottom: auto;
+}
+
+div.loginArea fieldset
+{
+	width: 470px;
+	margin: auto;
+}
+
+/* ################################### */
+/* Login Info Style
+/* ################################### */
+div.loginInfo
+{
+	text-align: right;
+	padding-right: 1%;
+}
+
+div.loginInfo ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+div.loginInfo li
+{
+	font: 10px 微軟正黑體, Microsoft JhengHei, arial, sans-serif;
+	color: #4B4B4B;
+	list-style: none;
+	float: right;
+	margin: 0;
+	padding: 0;
+}
+
+div.loginInfo input
+{
+	border-style: none;
+	width: 150px;
+	background-color: #F7F7F7;
+	padding: 1px 1px 1px 1px;
+	margin: 1px 1px 1px 1px;
+}
+
+
+/* ################################### */
+/* ActionMessage and ActionError
+/* ################################### */
+div.actionErrors, div.actionMessages{
+	display: none;
+}
+
+div.actionErrors, ul.errorMessage{
+	margin: auto;
+	text-align: center;
+	width: 90%;
+	font-family: arial,sans-serif;
+	color: red;
+	border: red solid;
+}
+div.actionErrors div.actionError, ul.errorMessage li{
+/* 	font-size: x-large; */
+	list-style: none;
+	text-transform: uppercase;
+	margin: 1px 1px 1px 1px;
+	padding: 1px 1px 1px 1px;
+}
+
+div.actionMessages, ul.actionMessage{
+	margin: auto;
+	text-align: center;
+	width: 90%;
+	font-family: arial,sans-serif;
+	color: #4b8754;
+	border: #4b8754 solid;
+}
+div.actionMessages div.actionMessage, ul.actionMessage li{
+/* 	font-size: x-large; */
+	list-style: none;
+	text-transform: uppercase;
+	margin: 1px 1px 1px 1px;
+	padding: 1px 1px 1px 1px;
+}
+
+fieldset.style03 div.fieldError {
+	float: right;
+	display: block;
+	color: red;
+}
+
+fieldset:not(.style03) div.fieldError {
+	position: absolute;
+	display: block;
+	color: red;
+}
+
+input.fieldErrors
+{
+	border: 1px solid red;
+}
+
+
+/* ################################### */
+/* Warning Message Style
+/* ################################### */
+div.notice ul.warning{
+	margin: auto;
+	text-align: center;
+	width: 90%;
+	font-family: arial,sans-serif;
+	color: red;
+	border: red solid;
+}
+div.notice ul.warning li{
+	font-size: x-large;
+	list-style: none;
+	text-transform: uppercase;
+	margin: 1px 1px 1px 1px;
+	padding: 1px 1px 1px 1px;
+}
+
+div.notice ul.message{
+	margin: auto;
+	text-align: center;
+	width: 90%;
+	font-family: arial,sans-serif;
+	color: #4b8754;
+	border: #4b8754 solid;
+}
+div.notice ul.message li{
+	font-size: x-large;
+	list-style: none;
+	text-transform: uppercase;
+	margin: 1px 1px 1px 1px;
+	padding: 1px 1px 1px 1px;
+}
+
+/* div.notice div.warning h5{ */
+/* 	text-decoration: underline; */
+/* 	margin: 4px 4px 4px 4px; */
+/* 	padding: 4px 4px 4px 4px; */
+/* } */
+
+
+/* ################################### */
+/* Access Right Style
+/* ################################### */
+div.multipleCheckbox
+{
+	margin: 0;
+	padding: 0;
+	width: 253px;
+	height: 300px;
+	overflow: auto;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #999999;
+	font-size: 13px;
+	display: inline-block;
+}
+
+div.multipleCheckbox ul
+{
+	margin-left: 11px;
+}
+
+div.multipleCheckbox input
+{
+	border: none;
+	width: 15px;
+}
+
+/* ################################### */
+/* Fieldset Style
+/* ################################### */
+fieldset
+{
+	margin-top: 5px;
+	margin-bottom: 15px;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding: 5px 5px 5px 5px;
+	width: 98%;
+}
+
+/* Kiosk UI*/
+fieldset.kioskFieldset
+{
+	width: 97%;
+}
+fieldset.kioskFieldset input[type='checkbox']
+{
+	width: 20px;
+	height: 20px;
+}
+
+
+
+fieldset legend
+{
+	margin-left: 8px;
+	color: #999999;
+}
+
+fieldset ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+fieldset li
+{
+	list-style: none;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	padding: 0;
+}
+
+fieldset label
+{
+	display: inline-block;
+	/*line-height: 1.8;*/
+	vertical-align: top;
+	width: 200px;
+	min-width: 150px;
+}
+
+fieldset input
+{
+	width: 250px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #999999;
+	font-family: 微軟正黑體, Microsoft JhengHei, arial, sans-serif;
+}
+
+fieldset textarea
+{
+	width: 250px;
+	height: 80px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #999999;
+	font-family: 微軟正黑體, Microsoft JhengHei, arial, sans-serif;
+}
+
+fieldset select
+{
+	width: 255px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #999999;
+	font-family: 微軟正黑體, Microsoft JhengHei, arial, sans-serif;
+}
+
+fieldset img.productImage
+{
+	height: 255px;
+	width: 255px;
+}
+
+fieldset .inputText
+{
+	color: black;
+	background-color: white;
+}
+
+fieldset .displayText
+{
+	color: #555555;
+	background-color: #EFEFEF;
+}
+
+fieldset .radioText
+{
+	border-style: none;
+	width:20px;
+}
+
+fieldset .bigText
+{
+	font: bold;
+	font-size: 34pt;
+}
+
+fieldset.fieldsetStyle01 li
+{
+	float: none;
+}
+
+fieldset.fieldsetStyle02 li
+{
+	width: 49%;
+	float: left;
+	min-height: 25px;
+	
+	/*
+	border: 1px red solid;
+	*/
+}
+
+/* ################################### */
+/* Customized fieldset
+/* ################################### */
+fieldset floatNone
+{
+	float: none;
+}
+fieldset floatLeft
+{
+	float: left;
+}
+
+/*fieldset.fieldsetStyle03
+{
+	
+	text-align: center;
+	width: 500px;	
+}*/
+
+/* ################################### */
+/* Button Style
+/* ################################### */
+
+.btnHidden
+{
+	display: none;;
+}
+
+div.buttonArea 
+{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding: 0px;
+	text-align: center;
+	width: 100%;
+}
+
+.button, .buttonTwoRowText
+{
+	display: inline-block;
+	zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+	/*display: inline;*/
+	vertical-align: baseline;
+	outline: none;
+	text-align: center;
+	text-decoration: none;
+	text-transform: capitalize;
+	font-style: bold;
+	
+	font-family: 微軟正黑體, Microsoft JhengHei, arial, sans-serif;
+	cursor: pointer; 
+	/*
+	padding: 8px 32px 9px;
+	*/
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+	-webkit-border-radius: .5em;
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+.button
+{
+	width: 120px;
+	height: 30px;
+	font-size: 15px;
+}
+
+.buttonTwoRowText
+{
+	width: 150px;
+	height: 30px;
+	font-size: 15px;
+}
+
+
+.button:hover, .buttonTwoRowText:hover
+{
+	text-decoration: none;
+}
+
+.button:active, .buttonTwoRowText:active
+{
+	position: relative;
+	top: 1px;
+}
+
+
+/* gray - Attachment and Capture */
+.gray
+{
+	color: #e9e9e9;
+	border: solid 1px #555;
+	background: #6e6e6e;
+	background: -webkit-gradient(linear, left top, left bottom, from(#888), to(#575757));
+	background: -moz-linear-gradient(top,  #888,  #575757);
+	/* filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#888888', endColorstr='#575757'); */
+}
+
+.gray:hover {
+	background: #616161;
+	background: -webkit-gradient(linear, left top, left bottom, from(#757575), to(#4b4b4b));
+	background: -moz-linear-gradient(top,  #757575,  #4b4b4b);
+	/* filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#757575', endColorstr='#4b4b4b'); */
+}
+.gray:active {
+	color: #afafaf;
+	background: -webkit-gradient(linear, left top, left bottom, from(#575757), to(#888));
+	background: -moz-linear-gradient(top,  #575757,  #888);
+	/* filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#575757', endColorstr='#888888'); */
+}
+
+/* blue - Submit */
+.blue {
+	color: #d9eef7;
+	border: solid 1px #0076a3;
+	background: #0095cd;
+	background: -webkit-gradient(linear, left top, left bottom, from(#00adee), to(#0078a5));
+	background: -moz-linear-gradient(top,  #00adee,  #0078a5);
+	/*filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#00adee', endColorstr='#0078a5');*/
+}
+.blue:hover {
+	background: #007ead;
+	background: -webkit-gradient(linear, left top, left bottom, from(#0095cc), to(#00678e));
+	background: -moz-linear-gradient(top,  #0095cc,  #00678e);
+	/* filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#0095cc', endColorstr='#00678e');*/
+}
+.blue:active {
+	color: #80bed6;
+	background: -webkit-gradient(linear, left top, left bottom, from(#0078a5), to(#00adee));
+	background: -moz-linear-gradient(top,  #0078a5,  #00adee);
+	/*filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#0078a5', endColorstr='#00adee');*/
+}
+
+/* rosy - Reset */
+.rosy {
+	color: #fae7e9;
+	border: solid 1px #b73948;
+	background: #da5867;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f16c7c), to(#bf404f));
+	background: -moz-linear-gradient(top,  #f16c7c,  #bf404f);
+	/*filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f16c7c', endColorstr='#bf404f');*/
+}
+.rosy:hover {
+	background: #ba4b58;
+	background: -webkit-gradient(linear, left top, left bottom, from(#cf5d6a), to(#a53845));
+	background: -moz-linear-gradient(top,  #cf5d6a,  #a53845);
+	/*filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#cf5d6a', endColorstr='#a53845');*/
+}
+.rosy:active {
+	color: #dca4ab;
+	background: -webkit-gradient(linear, left top, left bottom, from(#bf404f), to(#f16c7c));
+	background: -moz-linear-gradient(top,  #bf404f,  #f16c7c);
+	/*filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#bf404f', endColorstr='#f16c7c');*/
+}
+
+/* white */
+.white {
+	color: #606060;
+	border: solid 1px #b7b7b7;
+	background: #fff;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+	background: -moz-linear-gradient(top,  #fff,  #ededed);
+	/*filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');*/
+}
+.white:hover {
+	background: #ededed;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
+	background: -moz-linear-gradient(top,  #fff,  #dcdcdc);
+	/*filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcdcdc');*/
+}
+.white:active {
+	color: #999;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#fff));
+	background: -moz-linear-gradient(top,  #ededed,  #fff);
+	/*filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#ffffff');*/
+}
+
+
+
+/* ################################### */
+/* Customized Button
+/* ################################### */
+.kioskButton {
+	display: inline-block;
+	zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+	/*display: inline;*/
+	width: 100px;
+	height: 30px;
+	vertical-align: baseline;
+	outline: none;
+	text-align: center;
+	text-decoration: none;
+	text-transform: capitalize;
+	font-size: 12px;
+	font-family:  微軟正黑體,Microsoft JhengHei,arial,sans-serif;
+	/* padding: 8px 32px 9px; */
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	-webkit-border-radius: .5em; 
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2); 
+}
+
+.enableButton {
+	cursor: pointer;
+}
+
+.disableButton {
+/* 	cursor: default; */
+	
+	color: #eeeeee;
+	border: solid 1px #0076a3;
+	background: #ffffff;
+	background: -webkit-gradient(linear, left top, left bottom, from(#00adee), to(#0078a5));
+	background: -moz-linear-gradient(top,  #00adee,  #0078a5);
+	/*filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#00adee', endColorstr='#0078a5');*/
+
+}
+
+.languageButton {
+	display: inline-block;
+	zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+	/*display: inline;*/
+	width: 65px;
+	height: 20px;
+	vertical-align: baseline;
+	outline: none;
+	text-align: center;
+	text-decoration: none;
+	text-transform: capitalize;
+	font-size: 12px;
+	font-family:  微軟正黑體,Microsoft JhengHei,arial,sans-serif;
+	cursor: pointer;
+	/* padding: 8px 32px 9px; */
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	-webkit-border-radius: .5em; 
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2); 
+}
+
+/* ################################### */
+/* Table Style
+/* ################################### */
+table 
+{
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+
+table td input
+{
+	border: none;
+	width: 15px;
+}
+
+table thead th
+{
+	font-size: 14px;
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border: 1px solid white;
+	background-color: #254784;
+	color: #ffffff;
+}
+
+table thead th.simpleCheckBox
+{
+	width: 30px;
+}
+
+table thead th.enable
+{
+	width: 60px;
+}
+
+table thead td 
+{
+	font-size: 14px;
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border: 1px solid white;
+	background-color: #254784;
+	color: #ffffff;
+}
+
+table tbody td
+{
+	font-size: 12px;
+	text-align: center;
+	border: 1px solid #bdc8ee;
+	padding: 0px;
+}
+table tbody td.RFIDDisplay
+{
+	width: 8%;
+	font-size:10px;
+}
+
+
+table tbody .highlightWarning 
+{
+	background-color: #ffbbbb;
+}
+
+/*table.alertTable thead td
+{
+	background-color: #9b2626;
+	color: #ffffff;
+}
+table.alertTable tbody td
+{
+	background-color: #ffbbbb;
+	border: 1px solid white;
+}*/
+
+/* ################################### */
+/* Customized Table Input Style
+/* ################################### */
+table td select.tblUniformType
+{
+	width: 200px;
+	border: solid;
+	border-width: 1px;
+	border-color: #999999;
+}
+
+table td select.tblUniformSize
+{
+	width: 80px;
+	border: solid;
+	border-width: 1px;
+	border-color: #999999;
+}
+
+table td input.tblUniformNo
+{
+	width: 150px;
+	border: solid;
+	border-width: 1px;
+	border-color: #999999;
+}
+
+table td input.tblRFID
+{
+	width: 200px;
+	border: solid;
+	border-width: 1px;
+	border-color: #999999;
+}
+
+table td select.tblUniformStatus
+{
+	width: 100px;
+	border: solid;
+	border-width: 1px;
+	border-color: #999999;
+	/*
+	color: #555555;
+	background-color: #EFEFEF;
+	text-align: center;
+	*/
+}
+
+table td input.tblRemark
+{
+	width: 200px;
+	border: solid;
+	border-width: 1px;
+	border-color: #999999;
+}
+
+/* ################################### */
+/* Global Style
+/* ################################### */
+div.header
+{
+	background-image: url('Header02.jpg');
+	background-repeat: repeat-x;
+	background-color: transparent;
+}
+
+div.body
+{
+	font: 15px;
+	font-family: 微軟正黑體, Microsoft JhengHei, arial, sans-serif;
+}
+
+div.alignRight
+{
+	float: right;
+	/*text-align: right;*/
+	margin: 0;
+	padding: 0;
+}
+
+div.alignLeft
+{	
+	float: left;
+	/*text-align:left;*/
+}
+
+div.RFIDTable
+{
+	overflow: auto;
+	border-style: none;
+	width:100%;
+	height:400px;
+	display: inline-block;
+}
+div.kioskRFIDTable
+{
+	overflow: auto;
+	border-style: none;
+	width:100%;
+	height:250px;
+	display: inline-block;
+}
+
+div.RFIDTotal
+{
+	width:25%;
+	height:93px;
+	float: left;
+}
+div.RFIDSummary
+{
+	overflow: auto;
+	border-style: none;
+	width:75%;
+	height:93px;
+	display: inline-block;
+	float: left;
+}	
+
+/* div.body ul
+{
+	margin: 0;
+	padding: 0;
+}
+div.body li{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+} */
+
+div.customizeSize
+{
+	width: 200px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+div.footer p 
+{
+	font: 10px arial, sans-serif;
+	color: white;
+	background-color: #254784;
+	position: fixed;
+	bottom: 0em;
+	width: 100%;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
+
+form
+{
+	height: auto;
+}
+
+body
+{
+	padding-bottom: 10px;
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+
+
+/* ################################### */
+/* Paging
+/* ################################### */
+div.pagingStyle01
+{
+	text-align: center;
+	
+	/*
+	font-size: small;
+	border: 1px solid #999;
+	*/
+}
+
+
+/* ################################### */
+/* Special Style Input Fields
+/* ################################### */
+.simpleCheckBox
+{
+	width: auto;
+	border-style: none;
+	border-width: 0px;
+}
+
+tr.tableRowLightBlue
+{
+	background-color: #f1f1ff;
+	color: black;
+}
+
+textarea.height30
+{
+	height: 30px;
+	/*
+	width: 250px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #999999;
+	font-family: 微軟正黑體, Microsoft JhengHei, arial, sans-serif;
+	*/
+}
+
+/* ################################### */
+/* Auto Complete Style
+/* ################################### */
+.ui-autocomplete {
+    max-height: 150px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    /* add padding to account for vertical scrollbar */
+    padding-right: 20px;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html .ui-autocomplete {
+    height: 150px;
+}
+
+/* .ui-autocomplete li.ui-menu-item { */
+/*       width: 900px; */
+/*       height: 150px; */
+/*       float: left; */
+/* } */
+
+.ui-autocomplete-loading { background: white url('../../images/layout/ajax-load.gif') right center no-repeat; }

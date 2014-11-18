@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/security 
+        http://www.springframework.org/schema/security/spring-security-3.1.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+	<!-- include application.properties -->
+	<context:property-placeholder location="classpath*:security*.properties" ignore-unresolvable="true" />
+	
+	<http security="none" pattern="/system/login!form.action*"></http>
+	<http security="none" pattern="/**/**.js"></http>
+	<http security="none" pattern="/**/**.css"></http>
+	<http security="none" pattern="/images/**"></http>
+	<http security="none" pattern="/callbackserver/**"></http>
+	<http security="none" pattern="/kiosk/**"></http>
+	<!-- This exception should also exist in application.properties (kiosk.securityException.pattern) -->
+	<http security="none" pattern="/master/department!getKiosk*"></http>
+	<http security="none" pattern="/master/cloth!getKiosk*"></http>
+	<http security="none" pattern="/master/cloth-type!getKiosk*"></http>
+	<http security="none" pattern="/master/staff!getKiosk*"></http>
+	<http security="none" pattern="/others/attachment!showKioskAttachment*"></http>
+	<http security="none" pattern="/system/kiosk-home.action*"></http>
+	<http security="none" pattern="/system/kiosk-home!execute.action*"></http>
+	<!-- This exception should also exist in application.properties (kiosk.securityException.pattern) -->
+	
+	<!-- added by kan, all handheld transaction no need to login  -->
+	<http security="none" pattern="/handheld/**"></http>
+	
+	<global-method-security pre-post-annotations="enabled"/>
+	<http auto-config='true' use-expressions="true"
+		access-denied-page="/system/login!form.action">
+		<intercept-url pattern="/**" access="isAuthenticated()" />
+		<form-login login-page="/system/login!form.action"
+			authentication-failure-url="/system/login!form.action?error=1"
+			always-use-default-target="true" default-target-url="/system/home" 
+		/>
+
+<!-- Testing: Spring security lets you define maximum sessions allowed per user concurrently. -->
+<!-- http://stackoverflow.com/questions/10782968/allow-only-one-session-per-user -->
+<!-- 		<session-management> -->
+<!-- 		    <concurrency-control max-sessions="1" expired-url="/system/login!form.action?error=1"/> -->
+<!-- 		</session-management> -->
+<!-- Testing: Spring security lets you define maximum sessions allowed per user concurrently. -->
+	</http>
+
+	<authentication-manager>
+	<authentication-provider user-service-ref="systemService">
+	<password-encoder hash="md5">
+	</password-encoder>
+	</authentication-provider>
+	</authentication-manager>
+
+</beans:beans>

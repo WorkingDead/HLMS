@@ -1,0 +1,216 @@
+.hidden{
+	display: none;
+}
+
+/* ################################### */
+/* Div style
+/* ################################### */
+
+div{
+	margin: 0;
+	padding: 0;
+}
+
+div.alignRight
+{
+	text-align: right;
+}
+
+div.alignCenter
+{
+	text-align: center;
+}
+
+div.alignCenterDiv
+{
+	text-align: center;
+}
+
+/* ################################### */
+/* Warning Message Style
+/* ################################### */
+div.notice ul.warning{
+	margin: auto;
+	text-align: center;
+	width: 90%;
+	font-family: arial,sans-serif;
+	color: red;
+	border: red solid;
+}
+div.notice ul.warning li{
+	font-size: x-large;
+	list-style: none;
+	text-transform: uppercase;
+	margin: 1px 1px 1px 1px;
+	padding: 1px 1px 1px 1px;
+}
+
+div.notice ul.message{
+	margin: auto;
+	text-align: center;
+	width: 90%;
+	font-family: arial,sans-serif;
+	color: #4b8754;
+	border: #4b8754 solid;
+}
+div.notice ul.message li{
+	font-size: x-large;
+	list-style: none;
+	text-transform: uppercase;
+	margin: 1px 1px 1px 1px;
+	padding: 1px 1px 1px 1px;
+}
+
+/* div.notice div.warning h5{ */
+/* 	text-decoration: underline; */
+/* 	margin: 4px 4px 4px 4px; */
+/* 	padding: 4px 4px 4px 4px; */
+/* } */
+
+/* ################################### */
+/* Access Right Style
+/* ################################### */
+div.multipleCheckbox{
+	margin: 0;
+	padding: 0;
+	width: 253px;
+	height: 300px;
+	overflow: auto;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #999999;
+	font-size: 13px;
+	display: inline-block;
+}
+div.multipleCheckbox ul{
+	margin-left: 15px;
+}
+div.multipleCheckbox input{
+	border: none;
+	width: 15px;
+}
+
+/* ################################### */
+/* Fieldset Style
+/* ################################### */
+
+fieldset{
+	margin-top: 5px;
+	margin-bottom: 15px;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding: 5px 5px 5px 5px;
+	width: 98%;
+}
+fieldset legend{
+	margin-left: 8px;
+	color: #999999;
+}
+fieldset ul{
+	margin: 0;
+	padding: 0;
+}
+fieldset li{
+	list-style: none;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	padding: 0;
+}
+fieldset label{
+	display: inline-block;
+	/*line-height: 1.8;*/
+	vertical-align: top;
+	width: 200px;
+	min-width: 150px;
+}
+
+fieldset label span.smalltext{
+	font-size: x-small;
+}
+
+fieldset input{
+	width: 250px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #999999;
+}
+fieldset textarea{
+	width: 250px;
+	height: 80px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #999999;
+	font-family: arial,sans-serif;
+}
+fieldset select{
+	width: 255px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #999999;
+	font-family: arial,sans-serif;
+}
+fieldset .inputText{
+	color: black;
+	background-color: white;
+}
+fieldset .displayText{
+	color: #555555;
+	background-color: #EFEFEF;
+}
+fieldset.fieldsetStyle01 li{
+	float: none;
+}
+
+fieldset.fieldsetStyle02 li{
+	width: 49%;
+	float: left;
+}
+
+/* ################################### */
+/* Data-Table Style
+/* ################################### */
+
+table.dataTable{
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+table.dataTable th input{
+	border: none;
+	width: 15px;
+}
+table.dataTable td input{
+	border: none;
+	width: 15px;
+}
+table.dataTable thead th{
+	font-size: 14px;
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border: 1px solid white;
+	background-color: #254784;
+	color: #ffffff;
+}
+table.dataTable tbody td{
+	font-size: 14px;
+	text-align: center;
+	border: 1px solid #bdc8ee;
+}
+table.dataTable tbody td.checkboxcolumn{
+	width: 0px;
+}
+table.dataTable tbody .highlightWarning{
+	background-color: #ffbbbb;
+}
+
+table.alertTable thead th{
+	background-color: #9b2626;
+	color: #ffffff;
+}
+table.alertTable tbody td{
+	background-color: #ffbbbb;
+	border: 1px solid white;
+}

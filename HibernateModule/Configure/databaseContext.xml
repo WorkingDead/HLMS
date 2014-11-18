@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+    ">
+
+	<!-- include application.properties -->
+	<context:property-placeholder location="classpath*:database*.properties" ignore-unresolvable="true" />
+
+	<!-- Scan all annotation for Hibernate -->
+	<context:component-scan base-package="module.dao" />
+	<context:component-scan base-package="module.service" />
+	
+	<!-- basebo BaseBoHibernateListener bean -->
+	<bean id="BaseBoHibernateInterceptor" class="module.hibernate.interceptor.OptimisticVersionControlInterceptor"/>
+
+	<!-- Data Source -->
+	<bean id="DataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${server.database.application.driver}" />
+		<property name="url" value="${server.database.application.url}" />
+		<property name="username" value="${server.database.application.username}" />
+		<property name="password" value="${server.database.application.password}" />
+	</bean>
+	<!-- Data Source -->
+
+	<!-- Session Factory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="DataSource" />
+		<property name="packagesToScan">
+			<list>
+				<value>module.dao</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<!-- 顯示實際操作資料庫時的SQL -->
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<!-- 將顯示的SQL排版，方便觀看 -->
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<!-- 是否根據需要每次自動創建數據庫 -->
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+			</props>
+		</property>
+		
+		<property name="entityInterceptor">
+			<ref local="BaseBoHibernateInterceptor"/>
+		</property>
+	</bean>
+	<!-- Session Factory -->
+
+	<!-- Transaction Manager -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- all bean id *Service* in package module.service.iface will have transaction protection -->
+	<!-- MUST BE THE IFACE, NOT IMPL in execution(* module.service.iface..*Service.*(..)) -->
+<!-- 	<aop:config> -->
+<!-- 		<aop:pointcut id="serviceOperation" -->
+<!-- 			expression="execution(* module.service.iface..*Service.*(..))" /> -->
+<!-- 		<aop:advisor pointcut-ref="serviceOperation" advice-ref="txAdvice" /> -->
+<!-- 	</aop:config> -->
+	<aop:config>
+		<aop:pointcut id="serviceOperation"
+			expression="execution(* module.service..*.*Service.*(..))" />
+		<aop:advisor pointcut-ref="serviceOperation" advice-ref="txAdvice" />
+	</aop:config>
+
+	<!-- all function named get* will read only -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="load*" read-only="true"/>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="find*" read-only="true"/>
+			<tx:method name="search*" read-only="true"/>
+			<tx:method name="total*" read-only="true"/>
+			<tx:method name="*" rollback-for="Exception"/>
+		</tx:attributes>
+	</tx:advice>
+	<!-- Transaction Manager -->
+
+</beans>

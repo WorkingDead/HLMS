@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<!-- multilanguage -->
+	<!-- ref: http://www.blogjava.net/max/archive/2006/11/01/78536.aspx -->
+	<!-- use "," for adding multiple resource files -->
+	<constant name="struts.custom.i18n.resources" value="
+														common.resources.baseLayout,
+														common.resources.general,
+														common.resources.menu,
+														common.resources.button,
+														common.resources.errors,
+														common.resources.security
+														" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	
+	<!-- search all Module jar also -->
+	<constant name="struts.convention.action.includeJars" value=".*/.*Module.*?jar(!/)?"/>
+
+	
+	<!-- ignore all web service url -->
+<!-- 	<constant name="struts.action.excludePattern" value="/ws/.*?"/> -->
+
+	<!-- struts config debug mode -->
+	<!-- please disable when production -->
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.i18n.reload" value="true" />
+    <constant name="struts.configuration.xml.reload" value="true" />
+	<constant name="struts.convention.classes.reload" value="true" />
+
+	<!-- convention -->
+	<constant name="struts.convention.action.mapAllMatches" value="true" /> <!-- Create action mappings, even if no @Action is found -->
+	<constant name="struts.convention.default.parent.package"
+		value="tiles-default" /> <!-- using tiles default for return type, can use @Result at class or method to change this -->
+	<!-- http://struts.apache.org/2.3.1.2/docs/result-annotation.html -->
+
+	<!-- file upload size limit -->
+	<constant name="struts.multipart.maxSize" value="1000000000" />
+
+
+	<!-- Error Pages -->
+	<!-- 404 -->
+	<package name="Errors" namespace="/web/errors" extends="tiles-default">
+		<!-- 404 -->
+		<action name="pageNotFund">
+			<result type="tiles">errors.404</result>
+		</action>
+		
+		<!-- 500 -->
+		<action name="systemError">
+			<result type="tiles">errors.500</result>
+		</action>
+	</package>
+	
+	<package name="struts-action-default" extends="jasperreports-default,tiles-default,json-default,struts-default">
+
+		<interceptors>
+
+<!-- Interceptor is the main core of struts 2 such as all auto java callback your action class method --> 
+<!-- prefixStack and postStack are separated from defaultStack -->
+<!-- This is because prefixStack and postStack can be used to combine in your action class in order to insert some interceptors in correct execution order -->
+<!-- http://struts.apache.org/2.3.1.2/docs/struts-defaultxml.html -->
+<!-- http://struts.apache.org/2.3.1.2/docs/interceptors.html -->
+<!-- http://struts.apache.org/2.3.1.2/docs/how-do-we-configure-an-interceptor-to-be-used-with-every-action.html -->
+
+<!-- License -->
+<interceptor name="licenseInterceptor" class="security.interceptor.LicenseInterceptor"></interceptor>
+<!-- IE fixed JSONValidationInterceptor -->
+<interceptor name="ieFixed-jsonValidation" class="utils.struts2.interceptor.IEFixedJSONValidationInterceptor"></interceptor>
+<!-- User Group Resource Authority Interceptor-->
+<interceptor name="securityAuthorityInterceptor" class="module.interceptor.SecurityAuthorityInterceptor"/>
+<!-- Kiosk Name Detection Interceptor -->
+<interceptor name="kioskNameDetectionInterceptor" class="module.interceptor.KioskNameDetectionInterceptor"/>
+
+<!-- The loading sequence is extremely important -->
+			<interceptor-stack name="prefixStack">
+                <interceptor-ref name="exception"/>
+                <interceptor-ref name="alias"/>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="i18n"/>
+                <interceptor-ref name="prepare"/>
+                <interceptor-ref name="chain"/>
+                <interceptor-ref name="scopedModelDriven"/>
+                <interceptor-ref name="modelDriven"/>
+                <interceptor-ref name="fileUpload"/>
+                <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="multiselect"/>
+                <interceptor-ref name="staticParams"/>
+                <interceptor-ref name="actionMappingParams"/>
+                <interceptor-ref name="params">
+                  <param name="excludeParams">dojo\..*,^struts\..*</param>
+                </interceptor-ref>
+
+<!-- Using @ConversionErrorFieldValidator to replace -->
+<!-- This is because @ConversionErrorFieldValidator is more flexible to have different error messages -->
+<!-- Besides, @VisitorFieldValidator can also have the effect of common error message -->
+<!-- For example, "this is not a date", "this is not a number" -->
+
+<!-- http://struts.apache.org/2.x/docs/type-conversion.html#TypeConversion-TypeConversionErrorHandling -->
+<!-- key = xwork.default.invalid.fieldvalue --><!-- xwork.default.invalid.fieldvalue= invalid input, {0} -->
+<!-- which you can override (the default text is Invalid field value for field "xxx", where xxx is the field name) in your global i18n resource bundle. -->
+<!-- key = invalid.fieldvalue.xxx -->
+<!-- where xxx is the field name. -->
+
+<!-- Call it per action class if necessary -->
+<!--                 <interceptor-ref name="conversionError"/> -->
+
+            </interceptor-stack>
+
+
+
+<!-- The loading sequence is extremely important --> 
+            <interceptor-stack name="postStack">
+				<interceptor-ref name="ieFixed-jsonValidation"/> <!-- this interceptor will fixed ie issue due to changed contentType -->
+                <interceptor-ref name="workflow">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+                <interceptor-ref name="debugging"/>
+                <interceptor-ref name="licenseInterceptor"/>
+                <interceptor-ref name="securityAuthorityInterceptor"/>		<!-- User Group Resource Authority Interceptor -->
+                <interceptor-ref name="kioskNameDetectionInterceptor"/>
+            </interceptor-stack>
+		</interceptors>
+
+		<global-results>
+			<result name="tiles_result" type="tiles">${tilesKey}</result>
+			<result name="jsonValidateResult" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">actionErrors\[\d+\], fieldErrors\..+$, actionMessages\[\d+\]</param>
+			</result>
+			
+			<result name="login.form" type="tiles">
+				<param name="location">login.form</param>
+			</result>
+			
+			<result name="license.not.valid.result" type="tiles">
+				<param name="location">license.not.valid.result</param>
+			</result>
+			
+			<result name="downloadExcel" type="stream">
+				<param name="contentType">application/vnd.ms-excel</param>  
+				<param name="inputName">inputUserData</param>  
+				<param name="contentDisposition">attachment;filename="${downloadFileName}"</param>  
+				<param name="bufferSize">4096</param>  
+			</result>
+		</global-results>
+	</package>
+	
+</struts>

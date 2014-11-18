@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="Big5" ?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" 
+                        "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+<taglib>
+  <tlibversion>1.0</tlibversion>
+  <jspversion>2.2</jspversion>
+  <shortname>dppaging</shortname>
+  <uri>http://utils.common.taglib/displaytagpaging</uri>
+  <info>Display Tag Paging</info>
+
+  <tag>
+    <name>paging</name>
+    <tagclass>utils.taglib.displaytagpaging.DisplayTagPagingTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    
+    <!-- required -->
+    <attribute>
+      <name>total</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>offset</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>interval</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <!-- not required -->
+    <attribute>
+      <name>size</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+</taglib>

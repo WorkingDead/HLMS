@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+"http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+	<!-- default layout (no menu) -->
+	<definition name="baseLayout" template="/WEB-INF/content/layout/baselayout.jsp">
+		<put-attribute name="title" value="RFID Laundry Management System" />
+		<put-attribute name="header" value="/WEB-INF/content/layout/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/content/layout/footer.jsp" />
+		<put-attribute name="globalSetting" value="/WEB-INF/content/layout/globalSetting.jsp" />
+
+		<put-list-attribute name="scripts">
+			<add-attribute value="/scripts/js/jquery-1.7.2.min.js"></add-attribute>
+			<add-attribute value="/scripts/js/jquery-ui-1.8.21.custom.min.js"></add-attribute>
+			<add-attribute value="/scripts/js/jquery.loadmask.min.js"></add-attribute>
+			<add-attribute value="/scripts/js/fileuploader.js"></add-attribute>
+			<add-attribute value="/scripts/js/BigDecimal-all-last.min.js"></add-attribute>
+			<add-attribute value="/scripts/js/jquery.mtz.monthpicker.js"></add-attribute>
+			<add-attribute value="/scripts/js/jquery-ui-timepicker-addon.js"></add-attribute>
+			
+			<!-- our js must lower then library -->
+			<add-attribute value="/scripts/js/js-utils.js"></add-attribute>
+		</put-list-attribute>
+
+		<put-list-attribute name="styles">
+			<add-attribute value="/scripts/css/cupertino/jquery-ui-1.8.21.custom.css"></add-attribute>
+			<add-attribute value="/scripts/css/cupertino/jquery-ui-timepicker-addon.css"></add-attribute>
+			<add-attribute value="/scripts/css/jquery.loadmask.css"></add-attribute>
+			<add-attribute value="/scripts/css/fileuploader.css"></add-attribute>
+			
+			<!-- our css must lower then library -->
+			<add-attribute value="/scripts/css/global.css"></add-attribute>
+			<add-attribute value="/scripts/css/layout/baselayout.css"></add-attribute>
+			<add-attribute value="/scripts/css/layout/button.css"></add-attribute>
+		</put-list-attribute>
+		<put-list-attribute name="styles-ie">
+			<add-attribute value="/scripts/css/global-ie.css"></add-attribute>
+		</put-list-attribute>
+
+	</definition>
+	<!-- default layout (no menu) -->
+
+	<!-- default layout (has menu) -->
+	<definition name="userBaseLayout" extends="baseLayout">
+		<put-attribute name="menu" value="/WEB-INF/content/layout/menu.jsp" />
+
+		<put-list-attribute name="scripts" inherit="true">
+			<add-attribute value="/scripts/js/ddsmoothmenu.js"></add-attribute>
+		</put-list-attribute>
+		
+		<put-list-attribute name="styles" inherit="true">
+			<add-attribute value="/scripts/css/smoothmenu/ddsmoothmenu.css"></add-attribute>
+		</put-list-attribute>
+		
+		<put-list-attribute name="styles-ie" inherit="true">
+		</put-list-attribute>
+	</definition>
+	<!-- default layout (has menu) -->
+
+	<!-- Kiosk layout (has Kiosk menu) -->
+	<definition name="kioskBaseLayout" extends="baseLayout">
+		<put-attribute name="header" value="/WEB-INF/content/layout/headerKiosk.jsp" />
+	
+		<put-attribute name="menu" value="/WEB-INF/content/layout/menuKiosk.jsp" />
+
+		<put-list-attribute name="scripts" inherit="true">
+			<add-attribute value="/scripts/js/ddsmoothmenu.js"></add-attribute>
+		</put-list-attribute>
+		
+		<put-list-attribute name="styles" inherit="true">
+			<add-attribute value="/scripts/css/smoothmenu/ddsmoothmenu.css"></add-attribute>
+		</put-list-attribute>
+		
+		<put-list-attribute name="styles-ie" inherit="true">
+		</put-list-attribute>
+	</definition>
+	<!-- kiosk layout (has kiosk menu) -->
+
+	<!-- simple layout (no header footer) -->
+	<definition name="simpleLayout" template="/WEB-INF/content/layout/simplelayout.jsp">
+	</definition>
+	<!-- simple layout (no header footer) -->
+
+	<!-- Error Start -->
+	<definition name="errors.404" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/errors/404.jsp" />
+	</definition>
+
+	<definition name="errors.500" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/errors/500.jsp" />
+	</definition>
+	<!-- Error End -->
+	
+	
+	<!-- Warning Start -->
+	<definition name="warning.page.in.use" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/warning/page-in-use.jsp" />
+	</definition>
+	
+	<definition name="warning.page.in.use" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/warning/page-in-use.jsp" />
+	</definition>
+	<!-- Error End -->
+	
+	
+
+	<!-- Login Start -->
+	<definition name="login.form" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/login/form.jsp" />
+	</definition>
+	<!-- Login End -->
+	
+	<!-- Home Start -->
+	<definition name="home" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/home/home.jsp" />
+	</definition>
+	<!-- Home End -->
+
+
+
+	<!-- Alert Start -->
+	<definition name="alert.list" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/alert/alert.jsp" />
+	</definition>
+	<!-- Alert End -->
+
+
+<!-- ////////////////////////////////////////////// -->
+<!-- Master Info -->
+<!-- ////////////////////////////////////////////// -->
+	<!-- Staff Start -->
+	<definition name="staff.new" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/staff/new.jsp" />
+	</definition>
+	
+	<definition name="staff.list" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/staff/list.jsp" />
+	</definition>
+	
+	<definition name="staff.search" extends="simpleLayout">
+		<put-attribute name="body" value="/WEB-INF/content/staff/search.jsp" />
+	</definition>
+	
+	<definition name="staff.edit" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/staff/edit.jsp" />
+	</definition>
+	
+	<definition name="staff.cloth.edit" extends="simpleLayout">
+		<put-attribute name="body" value="/WEB-INF/content/staff/edit-cloth.jsp" />
+	</definition>
+	
+	<!-- Staff End -->
+	
+	<!-- Zone Start -->
+	<definition name="zone.new" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/zone/new.jsp" />
+	</definition>
+	
+	<definition name="zone.list" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/zone/list.jsp" />
+	</definition>
+	
+	<definition name="zone.search" extends="simpleLayout">
+		<put-attribute name="body" value="/WEB-INF/content/zone/search.jsp" />
+	</definition>
+	
+	<definition name="zone.edit" extends="simpleLayout">
+		<put-attribute name="body" value="/WEB-INF/content/zone/edit.jsp" />
+	</definition>
+	<!-- Zone End -->
+
+	<!-- ClothType Start -->
+	<definition name="cloth-type.new" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/cloth-type/new.jsp" />
+	</definition>
+	
+	<definition name="cloth-type.list" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/cloth-type/list.jsp" />
+	</definition>
+	
+	<definition name="cloth-type.search" extends="simpleLayout">
+		<put-attribute name="body" value="/WEB-INF/content/cloth-type/search.jsp" />
+	</definition>
+	
+	<definition name="cloth-type.edit" extends="simpleLayout">
+		<put-attribute name="body" value="/WEB-INF/content/cloth-type/edit.jsp" />
+	</definition>
+	<!-- ClothType End -->
+
+	<!-- Cloth Start -->
+	<definition name="cloth.search" extends="simpleLayout">
+		<put-attribute name="body" value="/WEB-INF/content/cloth/search.jsp" />
+	</definition>
+	
+	<definition name="cloth.edit" extends="simpleLayout">
+		<put-attribute name="body" value="/WEB-INF/content/cloth/edit.jsp" />
+	</definition>
+	<!-- Cloth End -->
+
+
+<!-- ////////////////////////////////////////////// -->
+<!-- Process Mgt -->
+<!-- ////////////////////////////////////////////// -->
+	<!-- Ironing Delivery Fixed Reader -->
+	<definition name="ironing.delivery.main" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/ironing-delivery-fixed-reader/main.jsp" />
+	</definition>
+	
+	<definition name="ironing.delivery.page.in.use" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/ironing-delivery-fixed-reader/page-in-use.jsp" />
+	</definition>
+	
+	<!-- Cloth Racking Handheld -->
+	<definition name="cloth.racking.main" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/cloth-racking-handheld/main.jsp" />
+	</definition>
+	
+	<definition name="cloth.racking.page.in.use" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/cloth-racking-handheld/page-in-use.jsp" />
+	</definition>
+	
+	
+	<!-- Backup Function 1: Cloth Collection Handheld -->
+	<definition name="handheld.cloth.collection.main" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/cloth-collection-handheld/main.jsp" />
+	</definition>
+	
+	<definition name="handheld.cloth.collection.page.in.use" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/cloth-collection-handheld/page-in-use.jsp" />
+	</definition>
+	
+	<!-- Backup Function 2: Cloth Collection Handheld -->
+	<definition name="handheld.ironing.delivery.main" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/ironing-delivery-handheld/main.jsp" />
+	</definition>
+	
+	<definition name="handheld.ironing.delivery.page.in.use" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/ironing-delivery-handheld/page-in-use.jsp" />
+	</definition>
+	
+	<!-- Backup Function 3: Cloth Association Handheld -->
+	<definition name="handheld.cloth.association.main" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/cloth-association-handheld/main.jsp" />
+	</definition>
+	
+	<definition name="handheld.cloth.association.page.in.use" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/cloth-association-handheld/page-in-use.jsp" />
+	</definition>
+	
+	
+
+<!-- ////////////////////////////////////////////// -->
+<!-- Washing Receipt Mgt -->
+<!-- ////////////////////////////////////////////// -->
+	<definition name="receipt.list" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/receipt/list.jsp" />
+	</definition>
+
+	<definition name="receipt.search" extends="simpleLayout">
+		<put-attribute name="body" value="/WEB-INF/content/receipt/search.jsp" />
+	</definition>
+	
+	<!-- View Only: collect, rack, distribute (只提供檢視)-->
+	<definition name="receipt.detail" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/receipt/detail.jsp" />
+	</definition>
+	
+	<!-- Editable: ironing -->
+	<definition name="receipt.detail.ironing.receipt" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/receipt/detail-ironing-receipt.jsp" />
+	</definition>
+	
+	<definition name="receipt.detail.ironing.receipt.delete.cloth" extends="simpleLayout">
+		<put-attribute name="body" value="/WEB-INF/content/receipt/delete-cloth.jsp" />
+	</definition>
+
+	<definition name="receipt.ironing.receipt.pattern.edit" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/receipt/edit-ironing-receipt-pattern.jsp" />
+	</definition>
+
+
+<!-- ////////////////////////////////////////////// -->
+<!-- Inventory Mgt -->
+<!-- ////////////////////////////////////////////// -->
+	<definition name="inventory.list" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/inventory/list.jsp" />
+	</definition>
+	
+	<definition name="inventory.search" extends="simpleLayout">
+		<put-attribute name="body" value="/WEB-INF/content/inventory/search.jsp" />
+	</definition>
+	
+	<definition name="inventory.cloth.detail" extends="simpleLayout">
+		<put-attribute name="body" value="/WEB-INF/content/inventory/cloth-detail.jsp" />
+	</definition>
+	
+	<definition name="inventory.cloth.history" extends="simpleLayout">
+		<put-attribute name="body" value="/WEB-INF/content/inventory/cloth-history.jsp" />
+	</definition>
+
+<!-- ////////////////////////////////////////////// -->
+<!-- Special Event Mgt -->
+<!-- ////////////////////////////////////////////// -->
+	<definition name="special.event.list" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/special-event/list.jsp" />
+	</definition>
+	
+	<definition name="special.event.search" extends="simpleLayout">
+		<put-attribute name="body" value="/WEB-INF/content/special-event/search.jsp" />
+	</definition>
+	
+	<definition name="special.event.edit" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/special-event/edit.jsp" />
+	</definition>
+
+<!-- ////////////////////////////////////////////// -->
+<!-- Report -->
+<!-- ////////////////////////////////////////////// -->
+	<definition name="monthly.laundry.recv.report" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/report/monthly-laundry-recv-report.jsp" />
+	</definition>
+
+	<definition name="monthly.laundry.dist.report" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/report/monthly-laundry-dist-report.jsp" />
+	</definition>
+
+	<definition name="monthly.reported.missing.report" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/report/monthly-reported-missing-report.jsp" />
+	</definition>
+	
+	<definition name="daily.incident.report" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/report/daily-incident-report.jsp" />
+	</definition>
+
+	<definition name="washing.count.report" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/report/washing-count-report.jsp" />
+	</definition>
+
+<!-- ////////////////////////////////////////////// -->
+<!-- Kiosk -->
+<!-- ////////////////////////////////////////////// -->
+	<!-- Kiosk Home Start -->
+	<definition name="kioskHome" extends="kioskBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/home/kioskHome.jsp" />
+	</definition>
+	
+	<definition name="wrongKioskName" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/home/wrongKioskName.jsp" />
+	</definition>
+	<!-- Kiosk Home End -->
+
+
+
+	<!-- Kiosk -->
+	<definition name="cloth-collection.main" extends="kioskBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/kiosk/cloth-collection/main.jsp" />
+	</definition>
+	<definition name="cloth-collection.page.in.use" extends="kioskBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/kiosk/cloth-collection/page-in-use.jsp" />
+	</definition>
+	
+	<!-- Handheld version -->
+	<definition name="cloth-distribute.main" extends="kioskBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/kiosk/cloth-distribute/main_hh.jsp" />
+	</definition>
+	<definition name="cloth-distribute.page.in.use" extends="kioskBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/kiosk/cloth-distribute/page-in-use.jsp" />
+	</definition>
+	<!-- Fixed Reader version -->
+	<definition name="cloth-distribute-fixed-reader.main" extends="kioskBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/kiosk/cloth-distribute/main_fr.jsp" />
+	</definition>
+	
+	
+	<definition name="cloth-lost-and-found.main" extends="kioskBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/kiosk/cloth-lost-and-found/main.jsp" />
+	</definition>
+
+	<definition name="cloth-inquire.main" extends="kioskBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/kiosk/cloth-inquire/main.jsp" />
+	</definition>
+	
+	<definition name="cloth-inquire.search" extends="simpleLayout">
+		<put-attribute name="body" value="/WEB-INF/content/kiosk/cloth-inquire/search.jsp" />
+	</definition>
+	
+	<definition name="cloth-inquire.detail" extends="simpleLayout">
+		<put-attribute name="body" value="/WEB-INF/content/kiosk/cloth-inquire/detail.jsp" />
+	</definition>
+	
+	<definition name="cloth-inquire.history" extends="simpleLayout">
+		<put-attribute name="body" value="/WEB-INF/content/kiosk/cloth-inquire/history.jsp" />
+	</definition>
+	<!-- End kiosk -->
+
+
+
+	<!-- Security Start -->
+	<!-- User Management -->
+	<definition name="security.user.create"
+		extends="userBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/content/security/user/create.jsp" />
+	</definition>
+
+	<definition name="security.user.update"
+		extends="userBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/content/security/user/update.jsp" />
+	</definition>
+
+	<definition name="security.user.list"
+		extends="userBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/content/security/user/list.jsp" />
+	</definition>
+	
+	<definition name="security.user.search"
+		extends="simpleLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/content/security/user/search.jsp" />
+	</definition>
+	
+	<!-- User Group Management -->
+	<definition name="security.user-group.create"
+		extends="userBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/content/security/user-group/create.jsp" />
+	</definition>
+
+	<definition name="security.user-group.update"
+		extends="userBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/content/security/user-group/update.jsp" />
+	</definition>
+
+	<definition name="security.user-group.list"
+		extends="userBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/content/security/user-group/list.jsp" />
+	</definition>
+	
+	<definition name="security.user-group.search"
+		extends="simpleLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/content/security/user-group/search.jsp" />
+	</definition>
+	
+	<!-- License -->
+	<definition name="license.not.valid.result"
+		extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/content/security/license-not-valid.jsp" />
+	</definition>
+	<!-- Security End -->
+	
+	<!-- Personal Setting Start -->
+	<definition name="system.personal.setting"
+		extends="userBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/content/personal-setting/main.jsp" />
+	</definition>
+	<!-- Personal Setting End -->
+	
+	<!-- System Start -->
+	<!-- System End -->
+	
+	<!-- Others Start -->
+	<definition name="others.attachment.fileinput"
+		extends="simpleLayout"><!-- TODO change to simple layout -->
+		<put-attribute name="body" value="/WEB-INF/content/others/attachment/fileinput.jsp" />
+	</definition>
+	<definition name="others.attachment.imageinput"
+		extends="simpleLayout"><!-- TODO change to simple layout -->
+		<put-attribute name="body" value="/WEB-INF/content/others/attachment/imageinput.jsp" />
+	</definition>
+	<definition name="others.attachment.selectionimageinput"
+		extends="simpleLayout"><!-- TODO change to simple layout -->
+		<put-attribute name="body" value="/WEB-INF/content/others/attachment/selectionimageinput.jsp" />
+	</definition>
+	<definition name="others.attachment.soleimageinput"
+		extends="simpleLayout"><!-- TODO change to simple layout -->
+		<put-attribute name="body" value="/WEB-INF/content/others/attachment/soleimageinput.jsp" />
+	</definition>
+	
+	<definition name="others.attachment.fileinput.readonly"
+		extends="simpleLayout"><!-- TODO change to simple layout -->
+		<put-attribute name="body" value="/WEB-INF/content/others/attachment/filereadonly.jsp" />
+	</definition>
+	<definition name="others.attachment.imageinput.readonly"
+		extends="simpleLayout"><!-- TODO change to simple layout -->
+		<put-attribute name="body" value="/WEB-INF/content/others/attachment/imagereadonly.jsp" />
+	</definition>
+	<definition name="others.attachment.selectionimageinput.readonly"
+		extends="simpleLayout"><!-- TODO change to simple layout -->
+		<put-attribute name="body" value="/WEB-INF/content/others/attachment/selectionimagereadonly.jsp" />
+	</definition>
+	<definition name="others.attachment.soleimageinput.readonly"
+		extends="simpleLayout"><!-- TODO change to simple layout -->
+		<put-attribute name="body" value="/WEB-INF/content/others/attachment/soleimagereadonly.jsp" />
+	</definition>
+	<!-- Others End -->
+
+</tiles-definitions>

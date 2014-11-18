@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>our-library</groupId>
+  <artifactId>KeyManager</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>License Key Manage</name>
+  <description>For checking license</description>
+
+	<distributionManagement>
+		<repository>
+			<id>library.release</id>
+			<name>Internal Library Release Repository</name>
+			<url>dav:http://192.168.1.22:8080/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>library.snapshots</id>
+			<name>Internal Library Snapshot Repository</name>
+			<url>dav:http://192.168.1.22:8080/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+	
+  <build>
+  <plugins>
+		<plugin>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>2.0.2</version>
+			<configuration>
+				<source>1.6</source>
+				<target>1.6</target>
+			</configuration>
+		</plugin>
+	</plugins>
+  </build>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.apache.commons</groupId>
+  		<artifactId>commons-lang3</artifactId>
+  		<version>3.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.jasypt</groupId>
+  		<artifactId>jasypt</artifactId>
+  		<version>1.9.0</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.ibm.icu</groupId>
+  		<artifactId>icu4j</artifactId>
+  		<version>4.8.1.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>our-library</groupId>
+  		<artifactId>WebCommonUtils</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
+</project>
