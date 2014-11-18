@@ -1,0 +1,65 @@
+USE [hlms]
+GO
+
+
+
+/****** Object:  Index [ix_000]    Script Date: 12/3/2013 17:56:45 ******/
+CREATE NONCLUSTERED INDEX [ix_000] ON [dbo].[transaction]
+(
+	[creation_date] ASC,
+	[last_modify_date] ASC,
+	[version] ASC,
+	[created_by] ASC,
+	[modified_by] ASC,
+	[trans_name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+
+
+/****** Object:  Index [ix_001]    Script Date: 12/3/2013 17:57:40 ******/
+CREATE NONCLUSTERED INDEX [ix_001] ON [dbo].[transaction]
+(
+	[last_modify_date] ASC,
+	[version] ASC,
+	[created_by] ASC,
+	[modified_by] ASC,
+	[trans_name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+
+
+/****** Object:  Index [ix_002]    Script Date: 12/3/2013 17:57:49 ******/
+CREATE NONCLUSTERED INDEX [ix_002] ON [dbo].[transaction]
+(
+	[version] ASC,
+	[created_by] ASC,
+	[modified_by] ASC,
+	[trans_name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+
+
+/****** Object:  Index [ix_003]    Script Date: 12/3/2013 17:57:57 ******/
+CREATE NONCLUSTERED INDEX [ix_003] ON [dbo].[transaction]
+(
+	[created_by] ASC,
+	[modified_by] ASC,
+	[trans_name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+
+
+/****** Object:  Index [ix_004]    Script Date: 12/3/2013 17:58:05 ******/
+CREATE NONCLUSTERED INDEX [ix_004] ON [dbo].[transaction]
+(
+	[modified_by] ASC,
+	[trans_name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+
+
+/****** Object:  Index [ix_005]    Script Date: 12/3/2013 17:58:11 ******/
+CREATE NONCLUSTERED INDEX [ix_005] ON [dbo].[transaction]
+(
+	[trans_name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]

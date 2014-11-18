@@ -1,0 +1,217 @@
+USE [hlms]
+GO
+
+/****** Object:  StoredProcedure [dbo].[ArchiveCore]    Script Date: 27/2/2013 17:54:13 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author: Wing
+-- Create date: 2013-02-27
+-- Description:	The Core Of Archive
+-- TODO: whereStatementString instead of @whereColumnName
+-- =============================================
+CREATE PROCEDURE [dbo].[ArchiveCore]
+
+	-- Add the parameters for the stored procedure here
+	@TableIdentityColumnName varchar(50) = NULL, 
+	@TargetTableName varchar(500) = NULL,
+	@TargetTableArchiveName varchar(500) = NULL,
+	@whereColumnName varchar(max) = NULL,
+	@NumOfRowAffected varchar(50) = NULL
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+
+
+declare @tablename varchar(500)
+declare @sql varchar(max)
+declare @tablearchive varchar(500)
+
+--Get The Current Year For The Archive Table
+declare @yearResult varchar(50)
+SET @yearResult = ''
+--For Test Only
+--http://msdn.microsoft.com/en-us/library/ms174395.aspx
+--SELECT @yearResult = DATENAME(mi, GETDATE())
+--For Test Only
+SELECT @yearResult = YEAR( GETDATE() )
+
+--Initiate The Input Parameters
+declare @idname varchar(50) = @TableIdentityColumnName
+declare @targetTable varchar(500) = @TargetTableName
+declare @targetTableArchive varchar(500) = @TargetTableArchiveName + @yearResult
+
+--Get The Column Name Of The Target Table
+--E.X. id, core, card_number, ....
+declare @columnResultInt int = 0;
+declare @columnResult varchar(max)
+SET @columnResult = ''
+select @columnResult = @columnResult + column_name + ',' from information_schema.columns where table_name = @targetTable
+SET @columnResultInt = LEN(@columnResult)
+IF ( @columnResultInt > 0 )
+BEGIN
+	SET @columnResultInt = @columnResultInt - 1
+END
+SET @columnResult = SUBSTRING(@columnResult, 1, @columnResultInt)
+
+--Detect The Cursor And Try To Close And Deallocate It
+IF CURSOR_STATUS('global','tableCursor')>=-1
+BEGIN
+	CLOSE tableCursor
+	DEALLOCATE tableCursor
+END
+
+--Select all the tables which you want to make in archive
+declare tableCursor cursor FAST_FORWARD FOR 
+SELECT table_name FROM INFORMATION_SCHEMA.TABLES
+where table_name = @targetTable
+ 
+--Put your condition, if you want to filter the tables
+--like '%TRN_%' and charindex('Archive',table_name) = 0 and charindex('ErrorLog',table_name) = 0
+
+--Open the cursor and iterate till end
+OPEN tableCursor 
+FETCH NEXT FROM tableCursor INTO @tablename
+
+WHILE @@FETCH_STATUS = 0
+      BEGIN
+
+			set @tablearchive =  @targetTableArchive
+
+             --check for the table exsits, not, create it
+            IF not EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_NAME= @tablearchive) 
+			begin 
+				SET @sql = 'select * into ' + @tablearchive +' from "'+ @tablename +'" where 1=2'
+				EXEC(@sql)
+            END
+
+             --check the structure is same, if not, create it
+            IF exists (select column_name from 
+            INFORMATION_SCHEMA.COLUMNS where TABLE_NAME=@tablename and column_name not in (select column_name from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME=@tablearchive))
+            begin
+                  SET @sql = 'drop table ' + @tablearchive
+                  EXEC(@sql)
+                  SET @sql = 'select * into ' + @tablearchive +' from "'+ @tablename +'" where 1=2'
+                  EXEC(@sql)
+            end
+
+            --Check if the table contains, identify column,if yes, then it should be handled in differet way
+            --You cannot remove the identity column property through T-SQL
+            --Since the structure of both tables are same, the insert fails, as it cannot insert the idenfity column
+            --value in the archive table
+            IF EXISTS(SELECT * FROM information_schema.tables WHERE table_name = @tablearchive AND OBJECTPROPERTY(OBJECT_ID(TABLE_NAME), 'TableHasIdentity') != 0)
+			BEGIN
+				--Select the identity column name automatically             
+				select @idname = column_name  from 
+				information_schema.columns where 
+				columnproperty(object_id(table_name),column_name,'isidentity')=1 
+				AND table_name = @tablearchive
+			
+				--Remove the column
+				SET @sql = 'ALTER TABLE ' + @tablearchive + ' DROP COLUMN ' + @idname
+				EXEC(@sql)
+			
+				--Create the column name again (not as identity)
+				--archive table does require identity column
+				SET @sql = 'ALTER TABLE ' + @tablearchive + ' ADD ' + @idname + ' bigint'
+				EXEC(@sql)
+			END
+ 
+
+
+			--Define The Temp Table
+			declare @temptable TABLE (id bigint)
+
+			--Define The Necessary Variables
+			declare @rowaffectedlen int = 0
+			declare @rowaffected varchar(max) = ''
+
+			--The Main Query To Find Which Records Need To Be Archive
+			--Development Only
+			-- CONVERT(varchar, DATEADD(DAY, -5, GETDATE()))
+			--Production Deploy
+			-- CONVERT(varchar, DATEADD(MONTH, -3, GETDATE()))
+			SET @sql = 'select TOP ' + @NumOfRowAffected + ' ' + @idname + ' from "' + @tablename
+				+ '" where ' + @whereColumnName + ' <= ''' + CONVERT(varchar, DATEADD(MONTH, -3, GETDATE()))
+				+ ''' ORDER BY ' + @idname  + ' ASC'
+		  
+			--Execute The Query And Insert Into The Temp Table
+			INSERT @temptable EXEC(@sql)
+
+			--Get The Result From Temp Table
+			SELECT @rowaffected = @rowaffected + CONVERT(varchar, id) + ',' from @temptable 
+		  
+			--Remove The Last Commas
+			SET @rowaffectedlen = LEN(@rowaffected)
+			IF ( @rowaffectedlen > 0 )
+			BEGIN
+				SET @rowaffectedlen = @rowaffectedlen - 1
+			END
+			SET @rowaffected = SUBSTRING(@rowaffected, 1, @rowaffectedlen)
+
+
+
+			--If Something Found
+			IF ( @rowaffected != '' )
+			BEGIN
+
+				BEGIN TRAN
+
+					--Inserting
+					SET @sql = 'insert into ' + @tablearchive + '(' + @columnResult + ')' 
+					+ ' select ' + @columnResult + ' from "'+ @tablename + '"'
+					+ ' WHERE ' + @idname + ' IN ' + '(' + @rowaffected + ')'
+                  	EXEC(@sql)
+
+					--Check Errors And Rollback
+					IF @@ERROR <> 0
+					BEGIN
+						ROLLBACK TRAN
+						RAISERROR ('Error occured while copying data', 16, 1)
+						RETURN -1
+					END
+
+					--Deleting
+					SET @sql = 'delete "' + @tablename + '" where ' + @idname + ' IN ' + '(' + @rowaffected + ')'
+	          		EXEC(@sql)
+
+					IF @@ERROR <> 0
+					BEGIN
+						ROLLBACK TRAN
+						RAISERROR ('Error occured while deleting data', 16, 1)
+						RETURN -1
+					END
+
+				IF @@TRANCOUNT > 0
+				BEGIN
+					COMMIT TRAN
+				RETURN 0
+				END
+			END
+
+			--If Nothing Found
+			IF ( @rowaffected = '' )
+			BEGIN
+				RETURN 0
+			END
+
+
+
+      FETCH NEXT FROM tableCursor INTO @tablename 
+END
+
+CLOSE tableCursor
+DEALLOCATE tableCursor
+
+END
+
+GO
+

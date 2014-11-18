@@ -1,0 +1,16 @@
+œ®¥J½Ã¥Í¤¤¤ß
+	œ®	->	?
+	
+
+
+SOLUTION
+	When creating the db schema, please choose the following collation
+	¤¤¤å (¿Dªù¯S§O¦æ¬F°Ï)2		0x1404		Chinese_PRC_90_CI_AS	950
+ 
+	http://technet.microsoft.com/zh-tw/library/ms143508(SQL.90).aspx
+	http://www.dotblogs.com.tw/jimmyyu/archive/2009/08/30/10320.aspx
+
+	http://technet.microsoft.com/zh-tw/library/ms143508(v=sql.100).aspx
+	http://technet.microsoft.com/zh-tw/library/ms143508(v=sql.105).aspx
+	http://technet.microsoft.com/zh-tw/library/ms143515(v=sql.105).aspx
+	http://technet.microsoft.com/zh-tw/library/ms143726(v=sql.110).aspx

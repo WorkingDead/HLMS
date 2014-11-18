@@ -1,0 +1,146 @@
+USE [hlms]
+
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO [dbo].[users]
+           ([username]
+           ,[creation_date]
+           ,[last_modify_date]
+           ,[version]
+           ,[email]
+           ,[enabled]
+           ,[lang]
+           ,[password]
+           ,[remark]
+           ,[user_display_name]
+           ,[created_by]
+           ,[modified_by]) VALUES 
+ ('sadmin','2012-08-17 10:22:44','2012-08-17 10:22:44','2012-08-17 10:22:44','',1,'en_US','a9d402bfcde5792a8b531b3a82669585',NULL,'superadmin',NULL,NULL);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `groups` DISABLE KEYS */;
+INSERT INTO [dbo].[groups]
+           ([creation_date]
+           ,[last_modify_date]
+           ,[enabled]
+           ,[group_name]
+           ,[remark]
+           ,[created_by]
+           ,[modified_by]) VALUES 
+ ('2012-08-17 10:22:44','2012-08-17 10:22:44',1,'Super Admin',NULL,NULL,NULL);
+/*!40000 ALTER TABLE `groups` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `group_authorities` DISABLE KEYS */;
+INSERT INTO [dbo].[group_authorities]
+           ([creation_date]
+           ,[last_modify_date]
+           ,[authority]
+           ,[created_by]
+           ,[modified_by]
+           ,[group_id]) VALUES 
+ ('2012-08-17 10:22:44','2012-08-17 10:22:44','ROLE_SUPER_ADMIN',NULL,NULL,1);
+/*!40000 ALTER TABLE `group_authorities` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `group_members` DISABLE KEYS */;
+INSERT INTO [dbo].[group_members]
+           ([username]
+           ,[group_id]) VALUES 
+ ('sa',1);
+/*!40000 ALTER TABLE `group_members` ENABLE KEYS */;
+
+
+
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO [dbo].[users]
+           ([username]
+           ,[creation_date]
+           ,[last_modify_date]
+           ,[version]
+           ,[email]
+           ,[enabled]
+           ,[lang]
+           ,[password]
+           ,[remark]
+           ,[user_display_name]
+           ,[created_by]
+           ,[modified_by]) VALUES 
+ ('admin','2012-08-17 10:22:45','2012-08-17 10:22:45','2012-08-17 10:22:45','',1,'en_US','21232f297a57a5a743894a0e4a801fc3',NULL,'admin',NULL,NULL);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `groups` DISABLE KEYS */;
+INSERT INTO [dbo].[groups]
+           ([creation_date]
+           ,[last_modify_date]
+           ,[enabled]
+           ,[group_name]
+           ,[remark]
+           ,[created_by]
+           ,[modified_by]) VALUES 
+ ('2012-08-17 10:22:45','2012-08-17 10:22:45',1,'Admin',NULL,NULL,NULL);
+/*!40000 ALTER TABLE `groups` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `group_authorities` DISABLE KEYS */;
+INSERT INTO [dbo].[group_authorities]
+           ([creation_date]
+           ,[last_modify_date]
+           ,[authority]
+           ,[created_by]
+           ,[modified_by]
+           ,[group_id]) VALUES 
+ ('2012-08-17 10:22:45','2012-08-17 10:22:45','ROLE_ADMIN',NULL,NULL,2);
+/*!40000 ALTER TABLE `group_authorities` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `group_members` DISABLE KEYS */;
+INSERT INTO [dbo].[group_members]
+           ([username]
+           ,[group_id]) VALUES 
+ ('a',2);
+/*!40000 ALTER TABLE `group_members` ENABLE KEYS */;
+
+
+
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO [dbo].[users]
+           ([username]
+           ,[creation_date]
+           ,[last_modify_date]
+           ,[version]
+           ,[email]
+           ,[enabled]
+           ,[lang]
+           ,[password]
+           ,[remark]
+           ,[user_display_name]
+           ,[created_by]
+           ,[modified_by]) VALUES 
+ ('kiosk','2012-08-17 10:22:46','2012-08-17 10:22:46','2012-08-17 10:22:46','',1,'en_US','a9d402bfcde5792a8b531b3a82669585',NULL,'kiosk',NULL,NULL);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `groups` DISABLE KEYS */;
+INSERT INTO [dbo].[groups]
+           ([creation_date]
+           ,[last_modify_date]
+           ,[enabled]
+           ,[group_name]
+           ,[remark]
+           ,[created_by]
+           ,[modified_by]) VALUES 
+ ('2012-08-17 10:22:46','2012-08-17 10:22:46',1,'Kiosk',NULL,NULL,NULL);
+/*!40000 ALTER TABLE `groups` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `group_authorities` DISABLE KEYS */;
+INSERT INTO [dbo].[group_authorities]
+           ([creation_date]
+           ,[last_modify_date]
+           ,[authority]
+           ,[created_by]
+           ,[modified_by]
+           ,[group_id]) VALUES 
+ ('2012-08-17 10:22:46','2012-08-17 10:22:46','ROLE_KIOSK',NULL,NULL,3);
+/*!40000 ALTER TABLE `group_authorities` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `group_members` DISABLE KEYS */;
+INSERT INTO [dbo].[group_members]
+           ([username]
+           ,[group_id]) VALUES 
+ ('kiosk',3);
+/*!40000 ALTER TABLE `group_members` ENABLE KEYS */;

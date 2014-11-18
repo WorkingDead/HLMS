@@ -1,0 +1,46 @@
+﻿- 在tmp table中加上一個id field (auto inc), 用來記錄sync data的record次序
+	- insert 時要指定好field name
+		e.g. insert into staff(name, age, post) values ("chris", 18, "doctor")
+
+
+- sync success的record會delete
+
+- sync failed的record會留在tmp table中, 並在record的field中加入了 失敗原因
+
+
+- sync staff時不允許delete staff, 所以delete指令將會作為disable該staff處理
+	hlms不允許delete staff是因為dependency問題, 例如transaction
+
+
+
+
+
+--------------------------------------
+不能為NULL的field
+--------------------------------------
+		if ( STFCNM == null )
+			STFCNM = "";
+		
+		if ( STFSTS == null )
+			STFSTS = StfSts.A.toString();
+
+--------------------------------------
+不能為NULL的field
+--------------------------------------
+code		(不能為null, 會無法分辦員工)
+nameEng		(員工在系統中設計為必須有姓名)
+dept		(print receipt時員工按dept分類, 會引致receipt出錯)
+position	(不能為null, staff頁面會出error)
+
+
+
+If the staff is normal and then stf requires the staff to change to leave, then trigger special event
+if the staff is already leave, the system would not allow the stf to change the staff back to normal
+
+
+
+--------------------------------------
+能為NULL的field
+--------------------------------------
+cardNumber	(因card num必須是unique, 兩個null被視為duplicate but we need to generate a temp card num instead of using null)
+( The temp card num is five digit english chars instead of using numbers )

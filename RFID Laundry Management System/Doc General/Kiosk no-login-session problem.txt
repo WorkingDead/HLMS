@@ -1,0 +1,89 @@
+﻿###############################################
+有關Kiosk Page無需Login的問題與解決
+###############################################
+
+------------------------
+基礎需知
+------------------------
+- JSP的網頁需配合Servlet運作
+- Session Cookie若如果沒有設定timeout, 那麼該cookie不會以file形式儲存在硬盤上, 它只會存在browser的RAM中, 當Browser關閉時, 該Cookie被移除
+- 每當Browser關閉再打開後, Cookie已被移除
+	1. 其後, 當Browser第1次query server時, Server發現該Client request時沒附上jsessionid, 所以視為這是一個新session
+	2. server立即為該client gen一個session ID (JSP專用: jsessionid)
+	3. server使用JSP gen HTML時, 把所有form和有link的地方都偷偷加入一個jsessionid (自己查看一下網頁的src code)
+		
+		eg: 
+		<form id="addFrom" name="addFrom" action="/hlms/kiosk/cloth-collection.action;jsessionid=12345" method="post">
+		<a id="cloth-collection" href="/hlms/kiosk/cloth-collection!getMainPage.action;jsessionid=12345?kioskName=kiosk1" >RECEIVE</a>
+
+	4. server把HTML send給client
+	5. client接到該HTML, 發現server給自己assign了一個jsessionid, 於是馬上把它save進自己的session cookie中
+	6. 由於第1次收到的HTML里每一個form, 每一條link都被偷偷加上了jsessionid, submit form或click這些link時都會偷偷地把jsessionid一併submit給server
+		另外, 它亦把做好的session cookie放進HTML header中傳送給server (server或許看的是這個, 但不肯定)
+		(如果你click了一條link, 那麼你會發現browser的url欄會自動粘上了jsessionid在url後面, 那其實不是你點的時候才貼在後面的, 而是click的這個link本身就在JSP gen HTML階段已經偷偷加上去了, 給上面link的eg)
+	7. client click a link或按button submit了一個form
+	8. server發現該client這回request時附帶了自己剛才assign給它的jsessionid, 於是斷定這個client(即browser)啟動了cookie功能
+		server再次使用某JSP(同一個JSP亦沒問題) 為該client gen HTML時, 將不再偷偷把jsessionid 加入form和有link里
+		
+		eg: 
+		<form id="addFrom" name="addFrom" action="/hlms/kiosk/cloth-collection.action" method="post">
+		<a id="cloth-collection" href="/hlms/kiosk/cloth-collection!getMainPage.action?kioskName=kiosk1" >RECEIVE</a>
+
+	9. client收到第2次拿回的html, 里面已經沒有jsessionid的資料了
+	10. client再次request server時, 只需把session cookie放進HTML header中, server便能辦識自己了
+
+			
+
+ 
+------------------------
+js-utils的問題
+------------------------
+
+在Kan少寫的js-utils.js中, 寫了一個有關ajaxButton和ajaxForm的工具
+如其名, 這個工具能讓form中的data以ajax形式submit給server, 過程之中會組合出一個url, 正常情況該url會類似下面這條link
+
+	hlms/kiosk/cloth-collection!getMainPage?kioskName=kiosk1			(注!! 這條url是struts看的懂的URL!!!)
+
+但如果是第1次request server, 將會發生這種情況, gen出來的url將會變成以下這樣:
+
+	hlms/kiosk/cloth-collection;jsessionid=12345!getMainPage?kioskName=kiosk1	(注!!!!! struts看不懂這條URL!!!!!!!!!)
+
+以上url的結構被破壞, 因為jsessionid插在了Action Name (cloth-collection)和method (!getMainPage)之間, struts因此無法讀取此link
+
+
+所以, 當第1次request server時, HTML中有jsessionid, 而使用了js-utils.js中的ajaxButton, 就會引致問題
+
+
+
+
+------------------------
+Solution 1 (by Wing)
+------------------------
+使用URL redirect, 這樣, 你target的那個頁面永遠都是第2次request得到的結果
+
+
+------------------------
+Solution 2
+------------------------
+修改js-utils.js的ajaxButton的功能, 讓其將 jsessionid 插在正確位置
+	
+	hlms/kiosk/cloth-collection!getMainPage;jsessionid=12345?kioskName=kiosk1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,11 @@
+IE8
+Tools -> Internet Options -> Security
+	Safety Site
+		ADD "http://localhost"
+
+( This Saftey Site )
+Tools -> Internet Options -> Security
+	Custom Level
+		ActiveX Control and plug-ins
+			Initialize and script ActiveX controls not marked as safe
+				Enable

@@ -1,0 +1,22 @@
+
+#############################
+Dataplex Setting
+#############################
+
+
+Two physical readers
+
+
+Two logical readers
+Collection
+Ironing
+
+
+
+
+NotificationURI: http://192.168.1.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:8080/hlms/callbackserver/push.action
+ECSpec Name:
+
+Kiosk1ClothCollectionHandler			( Logical Readers: Collection )
+Kiosk2ClothCollectionHandler			( Logical Readers: Collection )
+IroningDeliveryHandler				( Logical Readers: Ironing )

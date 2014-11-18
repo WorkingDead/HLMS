@@ -1,0 +1,8 @@
+type	8				[Max 8 key types]		[bit]
+key		50 				[Max 50 chars]			[String]
+expiry	8				[yyyyMMdd]				[String]
+optional field			[unlimited]				[String]
+	format
+		name=value\n
+		name=value\n
+		name=value

@@ -1,0 +1,137 @@
+PROJECT IDE
+
+	Eclipse Java EE IDE for Web Developers.
+	
+	Version: Indigo Service Release 2
+	
+	Build id: 20120216-1857
+
+
+
+PROJECT ENVIRONMENT AND LIBRARY STURCTURE
+
+	Apache Tomcat 6
+		http://tomcat.apache.org/
+	
+	Java 6 JDK
+		http://www.oracle.com/technetwork/java/javase/downloads/index.html
+		
+	Microsoft SQL Server 2012
+		http://www.microsoft.com/en-us/sqlserver/default.aspx
+
+	Spring 3
+		http://www.springsource.org/
+
+	Hibernate 4
+		http://www.hibernate.org/
+
+	Apache STRUTS 2
+		http://struts.apache.org/
+
+	Apache Maven 2
+		http://maven.apache.org/
+		
+	Apache Tiles 2
+		http://tiles.apache.org/
+
+	jQuery 1.7.2
+		http://jquery.com/
+
+	JUnit 4
+		http://junit.org/
+		
+	Apache Log4j 1.2
+		http://logging.apache.org/log4j/1.2/
+
+	Jasper Reort 4
+		http://community.jaspersoft.com/project/jasperreports-library
+
+
+
+PROJECT EXTERNAL MODULE STURCTURE
+
+	HibernateModule
+		This module provides an user-friendly generic interface for using "Hibernate".
+		
+	WebCommonUtils
+		This module provides some useful methods/tools while writing your programs.
+	
+	KeyManager
+		This module handles the license of the system.
+	
+	KeyManagerGenerator
+		This module generate the license file.
+	
+	DataplexClientModule
+		This module handles the connections to "Dataplex" system.
+
+
+
+PROJECT INTERNAL MODULE STURCTURE
+
+	File "pom.xml"
+		This is an important file "Maven" use for downloading the dependencies (useful 3rd-party libraries).
+
+	Folder "src"
+		Package "common.resources"
+			This module is to handle i18N (multi-language).
+
+		Package "module.ale"
+			This module is to handle all "Handheld RFID Reader" and "Fixed RFID Reader" devices.
+	
+		Package "module.dao"
+			This module is to handle the database entities and related "Java" data objects.
+	
+		Package "module.interceptor"
+			This module is to handle the interception operations provided by "Struts 2".
+	
+		Package "module.validator"
+			This module is to handle the validation operations provided by "Struts 2".
+	
+		Package "module.scheduler"
+			This module is to handle the scheduled operations provided by "Spring 3".
+	
+		Package "module.service"
+			This module is to handle the database operations.
+	
+		Package "module.actions"
+			This module is to handle all web requests and responses.
+	
+		Package "z_test_junit"
+			This module is to handle the basic data import, tag reading simulation and all other test cases.
+			For basic data import:
+				Class "z_test_junit.ImportAll"
+			For tag reading simulation:
+				Class "z_test_junit.SimulateHandheldAll"
+				Class "z_test_junit.SimulateHandheldSendToClothAssociationHandler"
+				Class "z_test_junit.SimulateHandheldSendToClothCollectionHandler"
+				Class "z_test_junit.SimulateHandheldSendToClothDistributeHandler"
+				Class "z_test_junit.SimulateHandheldSendToClothRackingHandler"
+				Class "z_test_junit.SimulateHandheldSendToIroningDeliveryHandler"
+
+	Folder "config"
+		This folder is to store the setting files of different libraries or modules.
+	
+	Folder "WebContent"
+		
+		Folder "images"
+			There are web image files.
+		
+		Folder "jasper_report"
+			There are the compiled files which are used to generate the report files.
+		
+		Folder "jasper_report_src"
+			There are the source files of those compiled files.
+		
+		Folder "scripts"
+			There are "CSS" and "Javascript" files.
+		
+		Folder "WEB-INF"
+			Folder "content"
+				There are all JSP files.
+			
+			Folder "lib"
+				There are additional external library files for "Microsoft SQL Server 2012".
+				
+			File "web.xml"
+				This is the important file of "Java" web project.

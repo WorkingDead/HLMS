@@ -1,0 +1,5 @@
+http://localhost:8080/hlms/system/kiosk-home.action?kioskName=kiosk1			( Not In Use Because "Kiosk no-login-session problem.txt")
+http://localhost:8080/hlms/system/kiosk-home.action?mainPage=cloth-collection&kioskName=kiosk1
+
+http://localhost:8080/hlms/system/kiosk-home.action?kioskName=kiosk2			( Not In Use Because "Kiosk no-login-session problem.txt")
+http://localhost:8080/hlms/system/kiosk-home.action?mainPage=cloth-distribute&kioskName=kiosk2

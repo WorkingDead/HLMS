@@ -1,0 +1,181 @@
+
+
+	/*
+	 * Background: 
+	 * 		This page is disallowed to be accessed by multiple user/IP/Session simultaneously,
+	 * 		this page need to be checked before entering. If there is already someone (IP/Session) 
+	 * 		using this page, go to the confirm-page first. The confirm-page will ask whether 
+	 * 		you want to continue, if yes, you will enter the page but normally the another user's 
+	 * 		data input will all be removed; if no, stay at the confirm page
+	 * 
+	 * How to use:
+	 * 		Java: 
+	 *			(1) Copy the code in following file and paste it in the Action Class
+	 *				/ProjectName/Doc Code for Copy/Page-In-Use.txt
+	 *
+	 * 			(2) Copy the following code to the 1st line of your enter-page-method and create the location in tiles 
+	 * 				if ( !isPageAvailable() )
+	 * 				{
+	 * 					this.setTilesKey("xxxx.page.in.use");	// remember to add a location in tiles
+	 * 					return TILES;
+	 * 				}
+	 * 
+	 * 			(3) If you are owning the page, after finishing the job and before leaving the page, 
+	 * 				you must call following method to release the page
+	 * 
+	 * 				setPageToAvailable();
+	 * 	
+	 * 			(4) Beside enter-page-method, for each other Action method, put your code in the following if-else
+	 * 				if ( isActionValid() )
+	 * 				{
+	 *  				// your original code move to here
+	 * 				}
+	 * 				else
+	 * 				{
+	 * 					// do nothing or add some special handling such as return a error msg
+	 * 				}
+	 * 
+	 * 		JSP: 
+	 * 			(1) Add following code in your JavaScript jQuery section
+	 *
+	 * 				validatePageScheduler();
+	 * 				<s:url var="validatePageSchedulerUrl" namespace="/XXXX" action="XXXX" method="checkPageMaster"></s:url>
+	 * 				function validatePageScheduler()	
+	 * 				{
+	 * 					$.ajax({
+	 * 						url: '<s:property value="#validatePageSchedulerUrl"/>',
+	 * 						success: function(result) {
+	 * 							var masterIsMe = result.masterIsMe;
+	 * 							if (masterIsMe)
+	 * 							{
+	 * 								setTimeout(validatePageScheduler, 10000);
+	 * 							}
+	 * 							else
+	 * 							{
+	 * 								// Add some tasks here
+	 * 								alertDialog("", "<s:text name="errors.page.no.longer.valid"/>", "<s:text name="btn.ok"/>" );
+	 * 							}
+	 * 						},
+	 * 						complete: function() { 	// nothing to do }
+	 * 					});
+	 * 				}
+	 * 
+	 * 			(2) create a page-in-use.jsp and edit it, you can be copied from 
+	 * 				/WEB-INF/content/warning/page-in-use.jsp
+	 */
+
+
+	///////////////////////////////////////////////////////////////
+	// Copy Start - Check page availability
+	///////////////////////////////////////////////////////////////
+	private static String masterHostIp = null;	// decide which IP can use this page / action
+	private static String masterSession = null;	// decide which session can use this page / action
+	private Boolean takePageOwnership;			// client use this var to decide whether it will take the ownership of Ironing Page
+	private Boolean masterIsMe;				// client use this var to check if he the page master currently
+	
+	protected void setPageToAvailable()
+	{
+		masterHostIp = null;
+		masterSession = null;
+	}
+	
+	protected boolean isPageAvailable()
+	{
+		boolean isAvailable = true;
+		String clientIp = getServletRequest().getRemoteAddr();
+		String mySessionId = getServletRequest().getSession().getId();
+		
+		if (masterHostIp == null)	// 沒有人正在使用這個Page
+		{
+			masterHostIp = clientIp;
+			masterSession = mySessionId;
+			System.out.println("Master: " + clientIp);
+		}
+		else if (!masterHostIp.equals(clientIp) )	// 別人正在使用
+		{
+			if (this.takePageOwnership == null || this.takePageOwnership == false)
+			{
+				isAvailable = false;
+			}
+			else
+			{
+				System.out.println( "Master Change: " + masterHostIp + " -> " + clientIp );
+				masterHostIp = clientIp;
+				masterSession = mySessionId;
+			}
+		}
+		else	// 自己正在使用
+		{
+			if (masterSession == null)
+			{
+				masterSession = mySessionId;
+			}
+			else if (!masterSession.equals(mySessionId))
+			{
+				if (this.takePageOwnership == null || this.takePageOwnership == false)
+				{
+					isAvailable = false;
+				}
+				else
+				{
+					System.out.println( "MasterSession Change: " + masterSession + " -> " + mySessionId );
+//					masterHostIp = clientIp;
+					masterSession = mySessionId;
+				}
+			}
+		}
+		
+		return isAvailable;
+	}
+	
+	protected boolean isActionValid()
+	{
+		boolean isValid = true;
+		
+		String clientIp = getServletRequest().getRemoteAddr();
+		String mySessionId = getServletRequest().getSession().getId();
+		
+		if (masterHostIp != null )
+		{
+			if ( !masterHostIp.equals(clientIp) )	// 已被別人搶去使用權
+			{
+				isValid = false;
+			}
+			else
+			{
+				// 自己正在使用中, 但被另一個自己的Session搶了使用權
+				if (masterSession != null && !masterSession.equals(mySessionId))
+				{
+					isValid = false;
+				}
+			}
+		}
+		
+		return isValid;
+	}
+	
+	// JSP will use this var
+	public Boolean getTakePageOwnership()
+	{
+		return takePageOwnership;
+	}
+	public void setTakePageOwnership(Boolean takePageOwnership)
+	{
+		this.takePageOwnership = takePageOwnership;
+	}
+	public String checkPageMaster()
+	{
+		this.masterIsMe = this.isActionValid();
+		return "checkPageMaster";
+	}
+	public Boolean getMasterIsMe()
+	{
+		return masterIsMe;
+	}
+	public void setMasterIsMe(Boolean masterIsMe)
+	{
+		this.masterIsMe = masterIsMe;
+	}
+	///////////////////////////////////////////////////////////////
+	// Copy End - Check page availability
+	///////////////////////////////////////////////////////////////

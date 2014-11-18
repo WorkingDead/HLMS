@@ -1,0 +1,35 @@
+The license file name would be the "android id" sub string (5, 10).
+For example, the below example file name would be "EA33D" in upper case when "android id" is BF7E1EA33DAF3DE8.
+
+BF7E1EA33DAF3DE8
+0123456789012345
+
+=EA33D
+
+
+
+Key Type
+	Choose "Mac Address"
+
+Key
+	Using device wifi mac address (Each device should have different value such as "00-22-F4-B8-0F-BF".)
+
+Expiry Date (yyyyMMdd)
+	Choose a date as long as possible
+
+OptionField
+TDID=NULL							(Fix value for this device with this firmware. Get it in "com.syntaghk.util.android.UniqueID")
+TSSN=NULL							(Fix value for this device with this firmware. Get it in "com.syntaghk.util.android.UniqueID")
+TSID=NULL							(Fix value for this device with this firmware. Get it in "com.syntaghk.util.android.UniqueID")
+BT=00:43:4F:F3:C7:34				(Each device should have different value.)
+DID=7F:41:1A:07:B4:22:CC:91			(Fix value for this device with this firmware. Get it in "com.syntaghk.util.android.UniqueID")
+AID=BF:7E:1E:A3:3D:AF:3D:E8			(Change when android system first boot or factory reset. Get it in "com.syntaghk.util.android.UniqueID")
+SERIAL=UNKNOWN						(Fix value for this device with this firmware. Get it in "com.syntaghk.util.android.UniqueID")
+READER01=00:1B:5F:00:B3:D5			(This is the reader mac address.)
+READER02=00:05:7B:22:0B:64			(This optional field can allow up to 10 readers.)
+READER03=00:1B:5F:00:B3:D3
+READER04=00:1B:5F:00:B3:D2
+
+
+
+Then, generate some fake keys with different name with the same file size with the similar creation and update date by using "security.gen.FakeKeyGenerator.java".
