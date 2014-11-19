@@ -10,9 +10,11 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import module.dao.BeansFactoryApplication;
+import module.dao.DaoFactory;
 import module.dao.iface.CustomCriteriaHandler;
 import module.dao.iface.CustomLazyHandler;
 import module.dao.master.Department;
+import module.dao.master.DepartmentDao;
 import module.dao.master.Staff;
 import module.dao.master.Stf;
 import module.dao.master.Staff.StaffStatus;
@@ -61,7 +63,8 @@ public class StaffDataSynScheduler {
 	@Resource(name=BeansFactoryApplication.BEANNAME)
 	private BeansFactoryApplication beansFactoryApplication;
 
-
+	@Resource(name=DaoFactory.DEPARTMENT_DAO)
+	public DepartmentDao departmentDao;
 
 	//is this job running?
 	private boolean processing = false;
@@ -182,9 +185,12 @@ public class StaffDataSynScheduler {
 					staff.setNameCht( stf.getSTFCNM() );
 					staff.setNameEng( stf.getSTFNAM() );
 
-
-
 					Department department = getDeptRecordBySrvdsc( stf.getSRVDSC() );
+					
+					//TODO Edit by Goffee.Ko at 2014-11-20, Create a new department Object, when it is null 
+					if(department == null){
+						department = addDepartment(stf.getSRVDSC(), stf.getCSRVDSC());
+					}
 					staff.setDept( department );
 
 
@@ -260,7 +266,13 @@ public class StaffDataSynScheduler {
 					if ( staff.getDept().getNameEng().equals( stf.getSRVDSC() ) ) {
 					}
 					else {
-						staff.setDept( getDeptRecordBySrvdsc( stf.getSRVDSC() ) );
+						//TODO Edit by Goffee.Ko at 2014-11-20, Create a new department Object, when it is null
+						Department department = getDeptRecordBySrvdsc( stf.getSRVDSC() );
+						if(department == null){
+							department = addDepartment(stf.getSRVDSC(), stf.getCSRVDSC());
+						}
+						
+						staff.setDept( department );
 					}
 
 
@@ -409,7 +421,10 @@ public class StaffDataSynScheduler {
 			Exception exception = new Exception( stfOpe.toString() );
 			log.error("getDeptRecordBySrvdsc: When SRVDSC = " + srvdsc);
 			log.error("getDeptRecordBySrvdsc: " + stfOpe.getDescription(), exception);
-			throw exception;
+
+			//TODO Edit by Goffee.Ko at 2014-11-20
+			//throw exception;
+			return null;
 		}
 	}
 	
@@ -582,5 +597,44 @@ public class StaffDataSynScheduler {
 			log.error("getStaffRecordByStf: " + stfOpe.getDescription(), exception);
 			throw exception;
 		}
+	}
+	
+	//TODO Add by Goffee.Ko at 2014-11-20
+	private Department addDepartment(final String srvdsc, final String csrvdsc) throws Exception{
+		//create department object
+		Department department = new Department();
+		
+		department.setEnable(true);
+		department.setNameEng(srvdsc);
+		department.setNameCht(csrvdsc);
+		
+		//get user
+		Users user = (Users)systemService.loadUserByUsername( BaseActionSecurity.AdminUserName );
+		department.setCreatedBy(user);
+		
+		//save department object
+		departmentDao.save(department);
+		
+		List<Department> deptList = masterService.findByExample(Department.class, null, null, null, 
+
+				new CustomCriteriaHandler<Department>() {
+					@Override
+					public void makeCustomCriteria(Criteria criteria) {
+						criteria.add( Restrictions.eq("nameEng", srvdsc) );
+						criteria.add( Restrictions.eq("nameCht", csrvdsc));
+					}
+				}
+				, null, null);
+		
+		if(deptList.size() == 1){
+			return deptList.get(0);
+		}else{
+			String errorMessage = "Create department Failed";
+			Exception exception = new Exception( errorMessage );
+			log.error("addDepartment: When SRVDSC = " + srvdsc);
+			log.error("addDepartment: " + errorMessage, exception);
+			throw exception;
+		}
+		
 	}
 }
