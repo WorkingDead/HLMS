@@ -246,7 +246,6 @@ public class ClothIroningExpirationScheduler {
 									// check is every cloth exist in the historyCloth set, if yes, it is late-back
 									if (historyRfidSet.contains(cloth.getRfid()))
 									{
-										//TODO goffee.ko  schedule insert log 
 										se = new SpecialEvent();
 										se.setCloth(cloth);
 										se.setClothType(cloth.getClothType());

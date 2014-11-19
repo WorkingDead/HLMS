@@ -30,13 +30,13 @@ public class LicenseInterceptor extends MethodFilterInterceptor {
 
 	@Override
 	protected String doIntercept(ActionInvocation invocation) throws Exception {
-//		KeyManager keyman = new KeyManager(((SecuritySetting)SpringUtils.getBean("securitySetting")).getKeyPath());
-//		success = keyman.isValid() && !keyman.isExpiry();
-//		if(success)
-//		{
+		KeyManager keyman = new KeyManager(((SecuritySetting)SpringUtils.getBean("securitySetting")).getKeyPath());
+		success = keyman.isValid() && !keyman.isExpiry();
+		if(success)
+		{
 			return invocation.invoke();
-//		}
-//		return LICENSE_NOT_VALID_RESULT;
+		}
+		return LICENSE_NOT_VALID_RESULT;
 	}
 
 }
