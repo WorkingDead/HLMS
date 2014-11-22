@@ -293,6 +293,12 @@ $(document).ready(function() {
 			{
 				form.trigger(formId + ".failure", result);
 			}
+			
+			//Add by Goffee.Ko at 2014-11-20
+			if(form[0].ajaxCallback){
+				eval(form[0].ajaxCallback.value + '.call()');
+			}
+			
 		}, "json");
 		
 		return false;

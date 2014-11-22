@@ -187,7 +187,7 @@ public class StaffDataSynScheduler {
 
 					Department department = getDeptRecordBySrvdsc( stf.getSRVDSC() );
 					
-					//TODO Edit by Goffee.Ko at 2014-11-20, Create a new department Object, when it is null 
+					//Edit by Goffee.Ko at 2014-11-20, Create a new department Object, when it is null 
 					if(department == null){
 						department = addDepartment(stf.getSRVDSC(), stf.getCSRVDSC());
 					}
@@ -266,7 +266,7 @@ public class StaffDataSynScheduler {
 					if ( staff.getDept().getNameEng().equals( stf.getSRVDSC() ) ) {
 					}
 					else {
-						//TODO Edit by Goffee.Ko at 2014-11-20, Create a new department Object, when it is null
+						//Edit by Goffee.Ko at 2014-11-20, Create a new department Object, when it is null
 						Department department = getDeptRecordBySrvdsc( stf.getSRVDSC() );
 						if(department == null){
 							department = addDepartment(stf.getSRVDSC(), stf.getCSRVDSC());
@@ -422,7 +422,7 @@ public class StaffDataSynScheduler {
 			log.error("getDeptRecordBySrvdsc: When SRVDSC = " + srvdsc);
 			log.error("getDeptRecordBySrvdsc: " + stfOpe.getDescription(), exception);
 
-			//TODO Edit by Goffee.Ko at 2014-11-20
+			//Edit by Goffee.Ko at 2014-11-20
 			//throw exception;
 			return null;
 		}
@@ -599,7 +599,7 @@ public class StaffDataSynScheduler {
 		}
 	}
 	
-	//TODO Add by Goffee.Ko at 2014-11-20
+	//Add by Goffee.Ko at 2014-11-20
 	private Department addDepartment(final String srvdsc, final String csrvdsc) throws Exception{
 		//create department object
 		Department department = new Department();

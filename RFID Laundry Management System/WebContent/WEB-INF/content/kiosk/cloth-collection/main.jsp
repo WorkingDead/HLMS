@@ -7,6 +7,8 @@
 	<s:form theme="simple" id="addFrom" namespace="/kiosk" action="cloth-collection" method="post" cssClass="ajaxForm">
 	<s:hidden theme="simple" id="hiddenKioskName" name="kioskName"/>
 	
+	<!-- Add by Goffee.Ko at 2014-11-20 -->
+	<s:hidden theme="simple" id="ajaxCallback" name="ajaxCallback" value="autoSubmitCallBack" />
 <!-- ################################################## -->
 <!-- Receipt Info Fieldset -->
 <!-- ################################################## -->
@@ -55,6 +57,7 @@
 	</s:form>
 	
 	<div class="buttonArea">
+		<span id="debug_for_interval" name="debug_for_interval" ></span>
 		<s:submit theme="simple" type="button" id="btnCaptureStart" key="btn.capture" method="XXXX" cssClass="kioskButton blue buttonMargin" />
 		<s:submit theme="simple" type="button" id="btnCaptureStop" key="btn.capture.stop" method="XXXXXX" cssClass="kioskButton rosy buttonMargin" />
 	</div>
@@ -159,7 +162,63 @@
 
 <script>
 
+/* 
+ * Add by Goffee.Ko at 2014-11-20
+ */
+
+var total;
+var remain;
+var isStarted;
+var interval;
+
+autoSubmitCallBack = function(){
+	if(remain == 0){
+		initInterval();
+		$("#ajaxBtnReceiptReset").trigger("click");
+		//auto submit YES button
+		$(".ui-button-text").trigger("click");
+	}
+}
+
+function initInterval(){
+	isStarted = false;
+	//total = remain = 10;//for test
+	total = remain = 120;//for real
+}
+
+function stopInterval(){
+	clearInterval(interval);
+}
+
+function runInterval(){
+	interval = setInterval(function(){
+	  remain--;
+	  updateHTML(remain);
+	  if (remain === 0){
+	    clearInterval(interval);
+	    runAutoCommit();
+	  }
+	}, 1000);
+}
+
+function updateHTML(remain){
+	$('#debug_for_interval').html(remain);
+}
+
+function runAutoCommit(){
+	//write logic in here
+	$("#btnCaptureStop").trigger("click");
+}
+
+/*
+ * End
+ */
+
+
 $(function() {
+	
+	//init Interval
+	initInterval();
 	
 	var hiddenKioskName = $("#hiddenKioskName").val();
 	// alert("hiddenKioskName: " + hiddenKioskName);
@@ -186,9 +245,9 @@ $(function() {
 			data: {"kioskName": hiddenKioskName},
 			success: function()
 			{
-				$("#btnCaptureStart").attr("disabled", true);
-				$("#btnCaptureStart").addClass("disableButton");
-				$("#btnCaptureStart").removeClass("blue");
+				//$("#btnCaptureStart").attr("disabled", true);
+				//$("#btnCaptureStart").addClass("disableButton");
+				//$("#btnCaptureStart").removeClass("blue");
 				
 				$("#btnCaptureStop").attr("disabled", false);
 				$("#btnCaptureStop").addClass("rosy");
@@ -206,6 +265,17 @@ $(function() {
 		 		$("#ajaxBtnRemoveCloth").addClass("disableButton");
 		 		$("#ajaxBtnRemoveCloth").removeClass("rosy");
 
+				
+				
+				
+				//Add by Goffee.Ko at 2014-11-20
+				if(!isStarted){
+					isStarted = true;
+					runInterval();
+				}else{
+					remain = total + remain;
+				}
+				
 				// Very import to call worker() here because worker() check disabled status of btn #btnCaptureStart
 				worker();
 			},
@@ -243,6 +313,15 @@ $(function() {
 				$("#ajaxBtnRemoveCloth").attr("disabled", false);
 				$("#ajaxBtnRemoveCloth").addClass("rosy");
 		 		$("#ajaxBtnRemoveCloth").removeClass("disableButton");
+		 		
+		 		//Add by Goffee.Ko at 2014-11-20
+		 		if(remain == 0){
+		 			//initInterval();
+		 			$("#ajaxBtnReceiptSave").trigger("click");
+		 		}else{
+		 			stopInterval();
+		 			initInterval();
+		 		}
 			},
 			complete: function()
 			{
@@ -275,9 +354,12 @@ $(function() {
 	<s:url var="getCapturedRfidJsonUrl" namespace="/kiosk" action="cloth-collection" method="getCapturedRfidJson"></s:url>
 	function worker()
 	{
-		var captureBtnDisable = $("#btnCaptureStart").attr("disabled");
+		//var captureBtnDisable = $("#btnCaptureStart").attr("disabled");
 		
-		if (captureBtnDisable == "disabled")	// disabled means capturing
+		//if (captureBtnDisable == "disabled")	// disabled means capturing
+		
+		//Edit by Goffee.Ko at 2014-11-20
+		if (isStarted)
 		{
 			$.ajax({
 				url: '<s:property value="#getCapturedRfidJsonUrl"/>',
@@ -539,7 +621,9 @@ $(function() {
 		$("#rfidCaptureDetailFieldset .actionMessages").hide();
 		
 		$("#staffCode").val("");
-		$("#staffCardNumber").val("");
+		
+		//Edit by Goffee.Ko at 2014-11-20
+		//$("#staffCardNumber").val("");
 		$("#receiptRemark").val("");
 		$("#RFIDTotal tbody tr td").text( 0 );
 		$("#RFIDSummary tbody").text("");
