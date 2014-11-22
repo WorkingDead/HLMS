@@ -1,0 +1,8 @@
+[Table][stf][STFCNM] = [Table][staff][name_cht]
+[Table][stf][STFCRD] = [Table][staff][card_number]
+[Table][stf][STFNAM] = [Table][staff][name_eng]
+[Table][stf][STF] = [Table][staff][code]
+[Table][stf][STFSTS] = [Table][staff][staff_status]
+[Table][stf][STFTYP] = [Table][staff][position]
+[Table][stf][SRVDSC] = [Table][department][name_eng]
+[Table][stf][CSRVDSC] = [Table][department][name_cht]

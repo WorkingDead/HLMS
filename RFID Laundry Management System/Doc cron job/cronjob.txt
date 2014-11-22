@@ -1,0 +1,6 @@
+2014-11-22 16:03:07,496 INFO  [HouseKeepingScheduler] [taskScheduler-1] 		 : HouseKeepingScheduler success, removed 0 record
+###########################################
+Ironing Expiration Scheduler Start
+###########################################
+receiptList: 0
+2014-11-22 17:03:07,498 INFO  [HouseKeepingScheduler] [taskScheduler-1] 		 : HouseKeepingScheduler success, removed 0 record
