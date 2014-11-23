@@ -3,6 +3,7 @@ package web.actions.master;
 import java.util.Iterator;
 import java.util.List;
 
+import module.dao.general.Receipt;
 import module.dao.general.Transaction;
 import module.dao.iface.CustomCriteriaHandler;
 import module.dao.iface.CustomLazyHandler;
@@ -12,15 +13,12 @@ import module.dao.master.Staff;
 import module.dao.master.Zone;
 
 import org.apache.log4j.Logger;
-
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-
 import org.hibernate.Criteria;
-
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -84,6 +82,8 @@ public class ClothAction extends BaseActionMaster
 		
 		return getEditPage();
 	}
+	
+	
 	
 	public String getEditPage()		// Read Only
 	{
@@ -420,7 +420,7 @@ public class ClothAction extends BaseActionMaster
 	public void setCloth(Cloth cloth) {
 		this.cloth = cloth;
 	}
-
+	
 	public Staff getStaff() {
 		return staff;
 	}

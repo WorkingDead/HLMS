@@ -199,9 +199,10 @@ function closeInfoForm() {
 
 	//Edit Form handler
 	$("#infoForm").live("infoForm.success", function(){
-
- 		if( popUpBox != undefined )
- 			popUpBox.dialog( "close" );
+	
+// 		if( popUpBox != undefined )
+//  			popUpBox.dialog( "close" );
+		$("#btnView").trigger('click');
 	});
 }
 

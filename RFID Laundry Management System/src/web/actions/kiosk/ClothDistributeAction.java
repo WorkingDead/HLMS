@@ -10,16 +10,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+
+import javax.annotation.Resource;
+
 import module.ale.handheld.handler.ClothDistributeHandler;
 import module.dao.general.Receipt;
 import module.dao.general.Receipt.ReceiptStatus;
 import module.dao.general.Receipt.ReceiptType;
 import module.dao.iface.CustomCriteriaHandler;
+import module.dao.iface.CustomLazyHandler;
 import module.dao.master.Cloth;
+import module.dao.master.ClothType;
 import module.dao.master.Department;
 import module.dao.master.Staff;
 import module.dao.master.Cloth.ClothStatus;
 import module.dao.system.Users;
+import module.service.ServiceFactory;
+import module.service.all.MasterService;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.InterceptorRef;
@@ -35,6 +42,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import utils.convertor.DateConverter;
 import utils.spring.SpringUtils;
 import web.actions.BaseActionKiosk;
+import web.actions.BaseActionSecurity;
 import web.actions.BaseActionKiosk.KioskName;
 import web.actions.form.ClothTypeCounter;
 import web.actions.form.ReceiptDistMainObject;
@@ -101,7 +109,6 @@ public class ClothDistributeAction extends BaseActionKiosk
 	private List<ReceiptDistMainObject> mainReportList;
 	private List<ReceiptDistSub1Object> subreport1List;
 	private List<ReceiptDistSub2Object> subreport2List;
-	
 	
 	public String getMainPage()
 	{
@@ -235,6 +242,117 @@ public class ClothDistributeAction extends BaseActionKiosk
 		}
 	}
 	
+	public CustomLazyHandler<Cloth> getClothDefaultLazyHandler() {
+		return 
+			new CustomLazyHandler<Cloth>() {
+	
+				@Override
+				public void LazyObject(Cloth obj) {
+					
+					obj.getStaff().getCode();
+					obj.getStaff().getDept().getNameEng();
+					obj.getClothType().getName();
+					
+					if ( obj.getZone() != null )
+						obj.getZone().getCode();
+
+					ClothType clothType = obj.getClothType();
+	
+					//for attachment use
+					if(clothType.getAttachmentList()!=null)
+					{
+						clothType.getAttachmentList().getCreationDate();
+						if(clothType.getAttachmentList().getAttachments()!=null)
+						{
+							clothType.getAttachmentList().getAttachments().size();
+						}
+					}
+
+					clothType.setSoleImageAttachment( getOthersService().getSoleImageAttachment(clothType) );
+					//clothType.setImageAttachment( getOthersService().getImageAttachment(clothType) );
+					//clothType.setSelectionImageAttachment( getOthersService().getSelectedAttachment(clothType) );
+				}
+			};
+	}
+	
+	
+	public String distribute(){
+		
+		try
+		{
+			
+			String receiptCode = this.getGeneralService().genKioskClothDistributeReceiptCode();
+			this.receipt = new Receipt();
+			this.receipt.setCode(receiptCode);
+			
+			Staff staff = getStaffByCard("11004");
+			
+			UserDetails userDetails = getSystemService().loadUserByUsername(BaseActionSecurity.AdminUserName);
+			Users kioskUser = (Users) userDetails;
+			
+			CustomLazyHandler<Cloth> customLazyHandler = getClothDefaultLazyHandler();
+			
+			cloth = this.getMasterService().get(Cloth.class, cloth.getId(), customLazyHandler);
+			
+			
+			HashSet<Cloth> clothSet = new HashSet<Cloth>();
+			clothSet.add(cloth);
+			Iterator<Cloth> itCloth = clothSet.iterator();
+			while (itCloth.hasNext())
+			{
+				Cloth cloth = itCloth.next();
+				cloth.setClothStatus(ClothStatus.Using);
+				cloth.setLastReceiptCode(receipt.getCode());
+				cloth.setModifiedBy(kioskUser);
+				cloth.setZone(null);
+			}
+			
+			receipt.setReceiptClothTotal(1);
+			receipt.setReceiptType(ReceiptType.Distribute);
+			receipt.setReceiptStatus(ReceiptStatus.Finished);	// no processing status (by Kitz)
+			receipt.setClothSet( clothSet );
+			receipt.setStaffHandledBy(staff);
+			receipt.setStaffPickedBy(staff);
+			receipt.setCreatedBy(kioskUser);
+			receipt.setFinishDate(Calendar.getInstance());
+			
+			///////////////////////////////////////////////////////
+			// Save the Receipt
+			///////////////////////////////////////////////////////
+			this.getGeneralService().saveReceiptAndTransaction(receipt);
+			
+			this.kioskName = KioskName.kiosk1.toString();
+			this.resetReceipt();
+			
+			// 2. Print the receipt
+			this.printReceipt(this.receipt);
+			
+			addActionMessage( getText( SuccessMessage_SaveSuccess ) );
+			log4j.info( getText( SuccessMessage_SaveSuccess ) );
+		}
+		catch (Exception e)
+		{
+			log4j.error( e );
+			
+			while ( true )
+			{
+				Exception cause = (Exception)e.getCause();
+				if ( cause == null )
+				{
+					addActionError( getText (ErrorMessage_SaveFail, new String[]{e.getMessage()} ) );
+					e.printStackTrace();
+					log4j.error( getText( ErrorMessage_SaveFail, new String[]{e.getMessage()} ) );
+					break;
+				}
+				else
+				{
+					e = cause;
+				}
+			}
+		}
+		
+		return "jsonValidateResult";
+	}
 	
 	public String create()
 	{

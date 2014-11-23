@@ -13,9 +13,11 @@
 <div class="actionMessages" ref="infoForm"></div>
 
 <div class="body">
-	<s:form theme="simple" id="infoForm" namespace="/general" action="inventory" method="post" cssClass="ajaxForm" >
+	<s:form theme="simple" id="infoForm" namespace="/kiosk" action="cloth-distribute" method="post" cssClass="ajaxForm" >
 		<fieldset id="infoFieldset" name="infoFieldset" class="fieldsetStyle02">
 			<legend><s:text name="fieldset.legend.cloth.detail" /></legend>
+			<!-- This div's ref must set to form id -->
+			
 			
 			<ul>
 				<li>
@@ -84,11 +86,23 @@
 				</li>
 				<li>
 					<label for="clothStatus"><s:text name="cloth.status"></s:text>: </label>
+					<s:if test="%{cloth.clothStatus.value == \"cloth.status.ready\"}">
+					<s:textfield theme="simple" name="clothStatus" cssClass="shortDisplayText" readonly="true">
+						<s:param name="value">
+							<s:property value="%{getText(cloth.clothStatus.value)}" escape="false"/>
+						</s:param>
+					</s:textfield>
+					<s:hidden theme="simple" id="clothId" name="cloth.id"/>
+					<s:hidden theme="simple" name="receipt.code" cssClass="displayText"/>
+							<s:submit theme="simple" type="button" id="ajaxBtnReceiptSave" key="btn.distribute" method="distribute" cssClass="blue buttonMarginCorner ajaxButton" />
+					</s:if>
+					<s:else>
 					<s:textfield theme="simple" name="clothStatus" cssClass="displayText" readonly="true">
 						<s:param name="value">
 							<s:property value="%{getText(cloth.clothStatus.value)}" escape="false"/>
 						</s:param>
 					</s:textfield>
+					</s:else>
 				</li>
 				
 				<li>

@@ -191,12 +191,13 @@ function setUpTimePicker()
 var ajaxIgnoreClick = false; 
 
 var methodName = null;
+var package = null;
+var action = null;
 $(document).ready(function() {
 	
 	$(".ajaxButton").live("click", function(){
 		methodName = $(this).attr("name");		// struts2 "method" attribute changed to "name" attribute in html
 												// example value of methodName is 'method:create' 
-		
 		return true;
 	});
 	
@@ -216,6 +217,9 @@ $(document).ready(function() {
 		
 		var form = $(this);
 		
+//package = ${this}.attr("package");
+//		action = ${this}.attr("action");		
+
 		// mask when saving
 		form.mask("Loading...");
 		
@@ -231,6 +235,7 @@ $(document).ready(function() {
 		disabled.attr('disabled','disabled');
 
 		// construct the url string
+
 		var url = form.attr("action").replace(".action", "") + "!" + methodName.replace("method:", "");
 		
 		// remove the error msg in this form
