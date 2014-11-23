@@ -22,6 +22,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
 
@@ -131,12 +132,14 @@ public class SpecialEventAction extends BaseActionGeneral
 					}
 				}
 				
-				
+				//Edit by Goffee.Ko at 2014-11-23
+				Criteria clothCriteria = criteria.createCriteria("cloth", JoinType.LEFT_OUTER_JOIN);
+				clothCriteria.add(Restrictions.or(Restrictions.ne("clothStatus", Cloth.ClothStatus.Void), Restrictions.isNull("clothStatus")));
 				if (cloth != null)
 				{
 					if (cloth.getCode() != null && !cloth.getCode().isEmpty())
 					{
-						Criteria clothCriteria = criteria.createCriteria("cloth");
+						//Criteria clothCriteria = criteria.createCriteria("cloth");
 						clothCriteria.add(Restrictions.like("code", cloth.getCode(), MatchMode.START));
 					}
 					
