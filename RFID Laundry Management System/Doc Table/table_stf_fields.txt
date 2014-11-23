@@ -6,3 +6,4 @@
 [Table][stf][STFTYP] = [Table][staff][position]
 [Table][stf][SRVDSC] = [Table][department][name_eng]
 [Table][stf][CSRVDSC] = [Table][department][name_cht]
+[Table][stf][OPE] = "this is a value of operation type, eg:INSERT, UPDATE, DELETE"

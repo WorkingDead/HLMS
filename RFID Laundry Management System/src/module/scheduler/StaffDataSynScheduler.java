@@ -10,11 +10,9 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import module.dao.BeansFactoryApplication;
-import module.dao.DaoFactory;
 import module.dao.iface.CustomCriteriaHandler;
 import module.dao.iface.CustomLazyHandler;
 import module.dao.master.Department;
-import module.dao.master.DepartmentDao;
 import module.dao.master.Staff;
 import module.dao.master.Stf;
 import module.dao.master.Staff.StaffStatus;
@@ -62,9 +60,6 @@ public class StaffDataSynScheduler {
 
 	@Resource(name=BeansFactoryApplication.BEANNAME)
 	private BeansFactoryApplication beansFactoryApplication;
-
-	@Resource(name=DaoFactory.DEPARTMENT_DAO)
-	public DepartmentDao departmentDao;
 
 	//is this job running?
 	private boolean processing = false;
@@ -613,7 +608,7 @@ public class StaffDataSynScheduler {
 		department.setCreatedBy(user);
 		
 		//save department object
-		departmentDao.save(department);
+		masterService.save(Department.class, department);
 		
 		List<Department> deptList = masterService.findByExample(Department.class, null, null, null, 
 

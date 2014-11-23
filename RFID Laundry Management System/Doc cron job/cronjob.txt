@@ -4,3 +4,8 @@ Ironing Expiration Scheduler Start
 ###########################################
 receiptList: 0
 2014-11-22 17:03:07,498 INFO  [HouseKeepingScheduler] [taskScheduler-1] 		 : HouseKeepingScheduler success, removed 0 record
+
+2014-11-22 18:49:17,571 INFO  [HouseKeepingScheduler] [taskScheduler-9] 		 : HouseKeepingScheduler success, removed 0 record
+2014-11-22 19:49:17,575 INFO  [HouseKeepingScheduler] [taskScheduler-6] 		 : HouseKeepingScheduler success, removed 0 record
+2014-11-22 20:49:17,580 INFO  [HouseKeepingScheduler] [taskScheduler-4] 		 : HouseKeepingScheduler success, removed 0 record
+2014-11-22 21:49:17,583 INFO  [HouseKeepingScheduler] [taskScheduler-2] 		 : HouseKeepingScheduler success, removed 0 record
