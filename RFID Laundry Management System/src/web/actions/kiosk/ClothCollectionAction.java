@@ -136,7 +136,6 @@ public class ClothCollectionAction extends BaseActionKiosk
 		receipt = new Receipt();
 		receipt.setCode(receiptCode);
 		
-		//Add by Goffee.Ko at 2014-11-20, Set default value for the card number
 		staff = new Staff();
 		staff.setCardNumber("00011004");
 		

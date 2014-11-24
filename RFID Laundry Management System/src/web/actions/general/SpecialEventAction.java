@@ -132,7 +132,6 @@ public class SpecialEventAction extends BaseActionGeneral
 					}
 				}
 				
-				//Edit by Goffee.Ko at 2014-11-23
 				Criteria clothCriteria = criteria.createCriteria("cloth", JoinType.LEFT_OUTER_JOIN);
 				clothCriteria.add(Restrictions.or(Restrictions.ne("clothStatus", Cloth.ClothStatus.Void), Restrictions.isNull("clothStatus")));
 				if (cloth != null)

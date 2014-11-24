@@ -7,7 +7,6 @@
 	<s:form theme="simple" id="addFrom" namespace="/kiosk" action="cloth-collection" method="post" cssClass="ajaxForm">
 	<s:hidden theme="simple" id="hiddenKioskName" name="kioskName"/>
 	
-	<!-- Add by Goffee.Ko at 2014-11-20 -->
 	<s:hidden theme="simple" id="ajaxCallback" name="ajaxCallback" value="autoSubmitCallBack" />
 <!-- ################################################## -->
 <!-- Receipt Info Fieldset -->
@@ -162,10 +161,6 @@
 
 <script>
 
-/* 
- * Add by Goffee.Ko at 2014-11-20
- */
-
 var total;
 var remain;
 var isStarted;
@@ -265,10 +260,6 @@ $(function() {
 		 		$("#ajaxBtnRemoveCloth").addClass("disableButton");
 		 		$("#ajaxBtnRemoveCloth").removeClass("rosy");
 
-				
-				
-				
-				//Add by Goffee.Ko at 2014-11-20
 				if(!isStarted){
 					isStarted = true;
 					runInterval();
@@ -314,7 +305,6 @@ $(function() {
 				$("#ajaxBtnRemoveCloth").addClass("rosy");
 		 		$("#ajaxBtnRemoveCloth").removeClass("disableButton");
 		 		
-		 		//Add by Goffee.Ko at 2014-11-20
 		 		if(remain == 0){
 		 			//initInterval();
 		 			$("#ajaxBtnReceiptSave").trigger("click");
@@ -358,7 +348,6 @@ $(function() {
 		
 		//if (captureBtnDisable == "disabled")	// disabled means capturing
 		
-		//Edit by Goffee.Ko at 2014-11-20
 		if (isStarted)
 		{
 			$.ajax({
@@ -622,7 +611,6 @@ $(function() {
 		
 		$("#staffCode").val("");
 		
-		//Edit by Goffee.Ko at 2014-11-20
 		//$("#staffCardNumber").val("");
 		$("#receiptRemark").val("");
 		$("#RFIDTotal tbody tr td").text( 0 );
