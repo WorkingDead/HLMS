@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ include file="/WEB-INF/content/layout/taglibs.jsp"%>
+<style>
+.start-button{
+    width: 300px;
+    height: 120px;
+    font-size: 30px;
+}
 
+.debug-for-interval{
+	font-size: 50px;
+}
+</style>
 <div class="body">
 	<s:hidden theme="simple" id="pageName" value="page-cloth-collection"/>
 
@@ -56,8 +66,8 @@
 	</s:form>
 	
 	<div class="buttonArea">
-		<span id="debug_for_interval" name="debug_for_interval" ></span>
-		<s:submit theme="simple" type="button" id="btnCaptureStart" key="btn.capture" method="XXXX" cssClass="kioskButton blue buttonMargin" />
+		<span id="debug_for_interval" name="debug_for_interval" class="debug-for-interval" ></span>
+		<s:submit theme="simple" type="button" id="btnCaptureStart" key="btn.capture" method="XXXX" cssClass="kioskButton blue buttonMargin start-button" />
 		<s:submit theme="simple" type="button" id="btnCaptureStop" key="btn.capture.stop" method="XXXXXX" cssClass="kioskButton rosy buttonMargin" />
 	</div>
 	
@@ -197,7 +207,7 @@ function runInterval(){
 }
 
 function updateHTML(remain){
-	$('#debug_for_interval').html(remain);
+	$('#debug_for_interval').html(remain + "s");
 }
 
 function runAutoCommit(){
@@ -264,7 +274,7 @@ $(function() {
 					isStarted = true;
 					runInterval();
 				}else{
-					remain = total + remain;
+					remain = total;
 				}
 				
 				// Very import to call worker() here because worker() check disabled status of btn #btnCaptureStart
