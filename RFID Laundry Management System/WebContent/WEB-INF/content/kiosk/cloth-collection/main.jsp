@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ include file="/WEB-INF/content/layout/taglibs.jsp"%>
+
 <style>
 .start-button{
-    width: 300px;
-    height: 120px;
-    font-size: 30px;
-}
-
-.debug-for-interval{
-	font-size: 50px;
+	/* style for start button */
+    width: 180px;
+    height: 50px;
+    font-size: 20px;
 }
 </style>
 <div class="body">
@@ -65,8 +63,8 @@
 		</fieldset>
 	</s:form>
 	
+	<!-- start and stop buttons -->
 	<div class="buttonArea">
-		<span id="debug_for_interval" name="debug_for_interval" class="debug-for-interval" ></span>
 		<s:submit theme="simple" type="button" id="btnCaptureStart" key="btn.capture" method="XXXX" cssClass="kioskButton blue buttonMargin start-button" />
 		<s:submit theme="simple" type="button" id="btnCaptureStop" key="btn.capture.stop" method="XXXXXX" cssClass="kioskButton rosy buttonMargin" />
 	</div>
@@ -176,6 +174,7 @@ var remain;
 var isStarted;
 var interval;
 
+var startBtnName = "";
 autoSubmitCallBack = function(){
 	if(remain == 0){
 		initInterval();
@@ -189,6 +188,10 @@ function initInterval(){
 	isStarted = false;
 	//total = remain = 10;//for test
 	total = remain = 120;//for real
+	
+	if(startBtnName != ""){
+		$('#btnCaptureStart').html(startBtnName);
+	}
 }
 
 function stopInterval(){
@@ -207,7 +210,10 @@ function runInterval(){
 }
 
 function updateHTML(remain){
-	$('#debug_for_interval').html(remain + "s");
+	if(startBtnName == ""){
+		startBtnName = $('#btnCaptureStart').html();
+	}
+	$('#btnCaptureStart').html(startBtnName + "(" + remain + ")");
 }
 
 function runAutoCommit(){
