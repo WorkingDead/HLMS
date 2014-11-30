@@ -4,9 +4,12 @@
 <style>
 .start-button{
 	/* style for start button */
-    width: 180px;
-    height: 50px;
+    width: 250px;
+    height: 80px;
     font-size: 20px;
+}
+.cancel-button{
+	 margin-left: 20px;
 }
 </style>
 <div class="body">
@@ -64,9 +67,9 @@
 	</s:form>
 	
 	<!-- start and stop buttons -->
-	<div class="buttonArea">
+	<div class="buttonArea" style="text-align: left;" >
+		<s:submit theme="simple" type="button" id="btnCaptureStop" key="btn.capture.stop" method="XXXXXX" cssClass="kioskButton rosy buttonMargin cancel-button" />
 		<s:submit theme="simple" type="button" id="btnCaptureStart" key="btn.capture" method="XXXX" cssClass="kioskButton blue buttonMargin start-button" />
-		<s:submit theme="simple" type="button" id="btnCaptureStop" key="btn.capture.stop" method="XXXXXX" cssClass="kioskButton rosy buttonMargin" />
 	</div>
 	
 <!-- ################################################## -->
