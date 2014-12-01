@@ -4,12 +4,13 @@
 <style>
 .start-button{
 	/* style for start button */
-    width: 250px;
-    height: 80px;
+    width: 110px;
+    height: 90px;
     font-size: 20px;
+    margin:0 0;
 }
 .cancel-button{
-	 margin-left: 20px;
+	margin:0 0;
 }
 </style>
 <div class="body">
@@ -30,48 +31,56 @@
 			<div class="actionErrors" ref="addFrom"></div>
 			<div class="actionMessages" ref="addFrom"></div>
 			
-			<div class="alignRight">
-				<s:submit theme="simple" type="button" id="ajaxBtnReceiptSave" key="btn.finish" method="create" cssClass="kioskButton blue buttonMarginCorner ajaxButton" />
-				<s:submit theme="simple" type="button" id="ajaxBtnReceiptReset" key="btn.reset" method="XXXXXXX" cssClass="kioskButton rosy buttonMarginCorner" />
+			<div style="width: 100%">
 				
-				<%-- 
-				<s:reset theme="simple" id="btnReset" method="XXXXXXX" key="btn.reset" cssClass="kioskButton rosy buttonMarginCorner"/>
-				--%>
+			
+				<div style="text-align: left; width: 500px; float: left;">
+					<ul>
+						<li>
+							<label for="receipt.code"><s:text name="receipt.code"/>:</label>
+							<s:textfield theme="simple" name="receipt.code" cssClass="displayText" readonly="true"/>
+						</li>
+						
+						<li>
+							<label for="staffCardNumber"><s:text name="staff.card"/>: </label>
+							<s:textfield theme="simple" id="staffCardNumber" name="staff.cardNumber" cssClass="inputText"  />
+						</li>
+						
+						<li>
+							<label for="staffCode"><s:text name="staff.code"/>:</label>
+							<s:textfield theme="simple" id="staffCode" name="staff.code" cssClass="inputText" />
+							<img id="staffCodeMicrosoftVirtualKeyboard" src="<s:property value="imagesPath"/>layout/Keyboard.png" style="visibility:hidden" />
+						</li>
+						
+						<li>
+							<label for="receiptRemark"><s:text name="receipt.remark"/>:</label>
+							<s:textarea theme="simple" id="receiptRemark" name="receipt.remark"/>
+							<img id="receiptRemarkMicrosoftVirtualKeyboard" src="<s:property value="imagesPath"/>layout/Keyboard.png" style="visibility:hidden" />
+						</li>
+					</ul>
+				</div>
+				<div style="float: left;">	
+					<s:submit theme="simple" type="button" id="btnCaptureStart" key="btn.capture" method="XXXX" cssClass="kioskButton blue buttonMargin start-button" />
+					<s:submit theme="simple" type="button" id="btnCaptureStop" key="btn.capture.stop" method="XXXXXX" cssClass="kioskButton rosy buttonMargin cancel-button" />
+					
+					<s:submit theme="simple" type="button" id="ajaxBtnReceiptSave" key="btn.finish" method="create" cssClass="kioskButton blue buttonMarginCorner ajaxButton" />
+					<s:submit theme="simple" type="button" id="ajaxBtnReceiptReset" key="btn.reset" method="XXXXXXX" cssClass="kioskButton rosy buttonMarginCorner" />
+					
+					<%-- 
+					<s:reset theme="simple" id="btnReset" method="XXXXXXX" key="btn.reset" cssClass="kioskButton rosy buttonMarginCorner"/>
+					--%>
+				</div>
+				
 			</div>
-			
-			
-			<ul>
-				<li>
-					<label for="receipt.code"><s:text name="receipt.code"/>:</label>
-					<s:textfield theme="simple" name="receipt.code" cssClass="displayText" readonly="true"/>
-				</li>
-				
-				<li>
-					<label for="staffCardNumber"><s:text name="staff.card"/>: </label>
-					<s:textfield theme="simple" id="staffCardNumber" name="staff.cardNumber" cssClass="inputText"  />
-				</li>
-				
-				<li>
-					<label for="staffCode"><s:text name="staff.code"/>:</label>
-					<s:textfield theme="simple" id="staffCode" name="staff.code" cssClass="inputText" />
-					<img id="staffCodeMicrosoftVirtualKeyboard" src="<s:property value="imagesPath"/>layout/Keyboard.png" style="visibility:hidden" />
-				</li>
-				
-				<li>
-					<label for="receiptRemark"><s:text name="receipt.remark"/>:</label>
-					<s:textarea theme="simple" id="receiptRemark" name="receipt.remark"/>
-					<img id="receiptRemarkMicrosoftVirtualKeyboard" src="<s:property value="imagesPath"/>layout/Keyboard.png" style="visibility:hidden" />
-				</li>
-			</ul>
 		</fieldset>
 	</s:form>
 	
 	<!-- start and stop buttons -->
+	<!-- 
 	<div class="buttonArea" style="text-align: left;" >
-		<s:submit theme="simple" type="button" id="btnCaptureStop" key="btn.capture.stop" method="XXXXXX" cssClass="kioskButton rosy buttonMargin cancel-button" />
-		<s:submit theme="simple" type="button" id="btnCaptureStart" key="btn.capture" method="XXXX" cssClass="kioskButton blue buttonMargin start-button" />
+		
 	</div>
-	
+	 -->
 <!-- ################################################## -->
 <!-- RFID Capture Summary Fieldset -->
 <!-- ################################################## -->
