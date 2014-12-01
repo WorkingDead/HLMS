@@ -86,23 +86,11 @@
 				</li>
 				<li>
 					<label for="clothStatus"><s:text name="cloth.status"></s:text>: </label>
-					<s:if test="%{cloth.clothStatus.value == \"cloth.status.ready\"}">
-					<s:textfield theme="simple" name="clothStatus" cssClass="shortDisplayText" readonly="true">
-						<s:param name="value">
-							<s:property value="%{getText(cloth.clothStatus.value)}" escape="false"/>
-						</s:param>
-					</s:textfield>
-					<s:hidden theme="simple" id="clothId" name="cloth.id"/>
-					<s:hidden theme="simple" name="receipt.code" cssClass="displayText"/>
-							<s:submit theme="simple" type="button" id="ajaxBtnReceiptSave" key="btn.distribute" method="distribute" cssClass="blue buttonMarginCorner ajaxButton" />
-					</s:if>
-					<s:else>
 					<s:textfield theme="simple" name="clothStatus" cssClass="displayText" readonly="true">
 						<s:param name="value">
 							<s:property value="%{getText(cloth.clothStatus.value)}" escape="false"/>
 						</s:param>
 					</s:textfield>
-					</s:else>
 				</li>
 				
 				<li>

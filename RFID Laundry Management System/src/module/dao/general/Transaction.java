@@ -1,5 +1,7 @@
 package module.dao.general;
 
+import java.util.Calendar;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -70,6 +72,20 @@ public class Transaction extends BaseBoGeneral
 		{
 			this.value = value;
 		}
+	}
+	
+	@Override
+	public boolean OnBeforeSave()
+	{
+		if (this.getCreationDate() == null){
+			this.setCreationDate(Calendar.getInstance());
+		}
+		
+		if (this.getLastModifyDate() == null) {
+			this.setLastModifyDate(Calendar.getInstance());
+		}
+		
+		return true; //return true if it can be save
 	}
 	
 	@Id

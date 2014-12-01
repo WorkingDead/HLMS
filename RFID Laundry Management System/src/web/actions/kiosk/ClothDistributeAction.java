@@ -39,6 +39,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
+
 import utils.convertor.DateConverter;
 import utils.spring.SpringUtils;
 import web.actions.BaseActionKiosk;
@@ -103,6 +105,16 @@ public class ClothDistributeAction extends BaseActionKiosk
 	private ClothDistributeHandler handler;
 	private String kioskName;
 	
+	private Calendar distributeDate; 
+	
+	public Calendar getDistributeDate() {
+		return distributeDate;
+	}
+
+	@TypeConversion(converter="utils.convertor.struts2.SimpleDateTimeToCalendarTypeConvertor")
+	public void setDistributeDate(Calendar distributeDate) {
+		this.distributeDate = distributeDate;
+	}
 	// iReport Receipt Printing
 	private static final String JASPER_RECEIPT_DIST = "jasper_report/receiptDist.jasper";
 	private String subreportPath;		// absolute path of subreport file
@@ -314,7 +326,12 @@ public class ClothDistributeAction extends BaseActionKiosk
 			receipt.setStaffHandledBy(staff);
 			receipt.setStaffPickedBy(staff);
 			receipt.setCreatedBy(kioskUser);
-			receipt.setFinishDate(Calendar.getInstance());
+			
+			Calendar now = Calendar.getInstance();
+			distributeDate.set(Calendar.HOUR, now.get(Calendar.HOUR));
+			distributeDate.set(Calendar.MINUTE, now.get(Calendar.MINUTE));
+			distributeDate.set(Calendar.SECOND, now.get(Calendar.SECOND));
+			receipt.setFinishDate(distributeDate);
 			
 			///////////////////////////////////////////////////////
 			// Save the Receipt

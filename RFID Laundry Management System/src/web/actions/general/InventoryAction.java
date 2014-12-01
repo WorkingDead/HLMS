@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import module.dao.general.Transaction;
 import module.dao.iface.CustomCriteriaHandler;
@@ -69,6 +70,18 @@ public class InventoryAction extends BaseActionGeneral
 		this.clothStatusList = Cloth.getClothStatusListWithoutLost();
 		this.zoneList = this.getMasterService().findAll(Zone.class, null, null, null, Order.asc("code"));
 		this.setTilesKey("inventory.list");
+		return TILES;
+	}
+	
+	public String getListPageWithReadyStatus(){
+		this.deptList = this.getMasterService().findAll(Department.class, null, null, null, Order.asc("nameCht"));
+		this.clothTypeList = getMasterService().findAll(ClothType.class, null, null, null, Order.asc("id"));
+		this.clothStatusList = new LinkedList<ClothStatus>( Arrays.asList(
+				ClothStatus.Ready
+			) );
+		this.zoneList = this.getMasterService().findAll(Zone.class, null, null, null, Order.asc("code"));
+		this.setTilesKey("inventory.distribute.list");
+		
 		return TILES;
 	}
 	

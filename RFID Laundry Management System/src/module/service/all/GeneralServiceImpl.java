@@ -216,6 +216,8 @@ public class GeneralServiceImpl extends BaseCRUDDaosServiceImpl implements Gener
 				tmpTransaction.setCreatedBy( createdByUser );
 				tmpTransaction.setTransHandledByStaff(receipt.getStaffHandledBy());
 				tmpTransaction.setTransPickedByStaff(receipt.getStaffPickedBy());
+				tmpTransaction.setCreationDate(receipt.getFinishDate());
+				tmpTransaction.setLastModifyDate(receipt.getFinishDate());
 				transList.add(tmpTransaction);
 			}
 		}

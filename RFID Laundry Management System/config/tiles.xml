@@ -288,6 +288,11 @@
 		<put-attribute name="body" value="/WEB-INF/content/inventory/list.jsp" />
 	</definition>
 	
+	<definition name="inventory.distribute.list" extends="userBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/content/inventory/distribute-list.jsp" />
+	</definition>
+	
+	
 	<definition name="inventory.search" extends="simpleLayout">
 		<put-attribute name="body" value="/WEB-INF/content/inventory/search.jsp" />
 	</definition>

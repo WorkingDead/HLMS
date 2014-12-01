@@ -47,11 +47,20 @@ $(function() {
 		<s:if test="%{ hasUserGroupResourceAuthority('/general/receipt!getListPage.action') == true }">
 			<li><s:a namespace="/general" action="receipt" method="getListPage"><s:text name="menu.level1.wash.receipt.mgt" /></s:a></li>
 		</s:if>
-
-		<s:if test="%{ hasUserGroupResourceAuthority('/general/inventory!getListPage.action') == true }">
-			<li><s:a namespace="/general" action="inventory" method="getListPage"><s:text name="menu.level1.inv.mgt" /></s:a></li>
-		</s:if>
 		
+		<s:if test="%{ hasUserGroupResourceAuthority('/general/inventory!getListPage.action') == true }">
+			<li><a href="#"><s:text name="menu.level1.inv.mgt" /></a>
+				<ul>
+					<s:if test="%{ hasUserGroupResourceAuthority('/general/inventory!getListPage.action') == true }">
+						<li><s:a namespace="/general" action="inventory" method="getListPage"><s:text name="menu.level2.cloth.summary" /></s:a></li>
+					</s:if>
+					<s:if test="%{ hasUserGroupResourceAuthority('/general/inventory!getListPageWithReadyStatus.action') == true }">
+						<li><s:a namespace="/general" action="inventory" method="getListPageWithReadyStatus"><s:text name="menu.level2.cloth.distribute" /></s:a></li>
+					</s:if>
+				</ul>
+			</li>
+		</s:if>
+
 		<s:if test="%{ hasUserGroupResourceAuthority('/general/special-event!getListPage.action') == true }">
 			<li><s:a namespace="/general" action="special-event" method="getListPage"><s:text name="menu.level1.special.event.mgt" /></s:a></li>
 		</s:if>
