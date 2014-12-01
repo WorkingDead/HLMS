@@ -227,6 +227,7 @@ function openInfoForm() {
 				}
 				if ( result == undefined || ( result.errors == undefined && (result.actionErrors == undefined || result.actionErrors.length==0) && (result.fieldErrors == undefined || getPropertyCount(result.fieldErrors)==0) ) )
 				{
+					removeActionError(formId);
 					$("#searchButton").trigger("click");
 				}
 				
