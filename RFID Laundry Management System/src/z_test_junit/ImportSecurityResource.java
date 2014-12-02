@@ -119,8 +119,25 @@ public class ImportSecurityResource {
 				10, 
 				ResourceGroup.Inv_Mgt, 
 				null,
-				"/general/inventory!getListPage.action", 
+				"/general/inventory!getListPage.action," +
+				"/general/inventory!getListPageWithReadyStatus.action", 
 				""),
+				invView(
+						"menu.level2.cloth.summary", 
+						ResourceType.URL,
+						10, 
+						ResourceGroup.Inv_Mgt, 
+						null,
+						"/general/inventory!getListPage.action", 
+						""),
+				invDeliveryHandheld(
+						"menu.level2.cloth.distribute", 
+						ResourceType.URL,
+						10, 
+						ResourceGroup.Inv_Mgt, 
+						null,
+						"/general/inventory!getListPageWithReadyStatus.action", 
+						""),
 
 
 

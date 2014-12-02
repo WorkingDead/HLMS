@@ -48,7 +48,7 @@ $(function() {
 			<li><s:a namespace="/general" action="receipt" method="getListPage"><s:text name="menu.level1.wash.receipt.mgt" /></s:a></li>
 		</s:if>
 		
-		<s:if test="%{ hasUserGroupResourceAuthority('/general/inventory!getListPage.action') == true }">
+		<s:if test="%{ hasUserGroupResourceAuthority('InvMgtMenu') == true }">
 			<li><a href="#"><s:text name="menu.level1.inv.mgt" /></a>
 				<ul>
 					<s:if test="%{ hasUserGroupResourceAuthority('/general/inventory!getListPage.action') == true }">
