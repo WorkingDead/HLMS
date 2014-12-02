@@ -190,9 +190,12 @@ var startBtnName = "";
 autoSubmitCallBack = function(){
 	if(remain == 0){
 		initInterval();
-		$("#ajaxBtnReceiptReset").trigger("click");
-		//auto submit YES button
-		$(".ui-button-text").trigger("click");
+		if($(".ui-button-text").length != 0){
+			$(".ui-button-text").trigger("click");
+		}else{
+			$("#ajaxBtnReceiptReset").trigger("click");
+			$(".ui-button-text").trigger("click");
+		}
 	}
 }
 
