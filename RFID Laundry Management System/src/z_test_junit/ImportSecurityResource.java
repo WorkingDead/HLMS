@@ -119,6 +119,7 @@ public class ImportSecurityResource {
 				10, 
 				ResourceGroup.Inv_Mgt, 
 				null,
+				"InvMgtMenu," +
 				"/general/inventory!getListPage.action," +
 				"/general/inventory!getListPageWithReadyStatus.action", 
 				""),
