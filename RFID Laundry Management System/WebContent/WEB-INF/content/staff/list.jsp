@@ -75,6 +75,7 @@
 					listValue="getText(value)"
 					disabled="false"
 					emptyOption="true"
+					value="defaultStatus"
 					cssClass="inputText" />
 			</li>
 			

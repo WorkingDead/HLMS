@@ -118,6 +118,9 @@
 <div class="actionErrors" ref="searchForm"></div>
 <div class="actionMessages" ref="searchForm"></div>
 <div class="buttonArea">
+	<label for="staffCode"><s:text name="staff.distribute.code" />: </label>
+	<s:textfield theme="simple" id="staffCode" name="staff.code" cssClass="inputText"></s:textfield>
+
 	<label for="dateDistribute"><s:text name="label.distribute.date"></s:text>: </label>
 	<s:textfield theme="simple" id="dateDistribute" name="dateDistribute" cssClass="inputText dateTimePicker"></s:textfield>
 
@@ -148,7 +151,7 @@ $(function(){
 
 function openInfoForm() {
 
-	<s:url var="distributeCloth" namespace="/kiosk" action="cloth-distribute" method="distribute"/>
+	<s:url var="distributeCloth" namespace="/general" action="cloth-distribute" method="distribute"/>
 
 	$("#btnDistribute").on("click", function(){
 		
@@ -174,6 +177,7 @@ function openInfoForm() {
 		{
 			var clothId = $(".selectedClothMarker:checked:first").val();
 			var distributeDate = $('#dateDistribute').val();
+			var staffCode = $('#staffCode').val();
 			
 			if (distributeDate == "") {
 				alertDialog(
@@ -183,7 +187,16 @@ function openInfoForm() {
 				return false;
 			}
 			
+			if (staffCode == ""){
+				alertDialog(
+						"",
+						"<s:text name="errors.staff.code.required"/>",
+						"<s:text name="btn.ok"/>");
+				return false;
+			}
+			
 			var data = {
+				'staff.code': staffCode,
 				'cloth.id': clothId,
 				'distributeDate': distributeDate
 			};

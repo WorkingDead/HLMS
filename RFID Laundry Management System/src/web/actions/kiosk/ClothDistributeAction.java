@@ -37,6 +37,7 @@ import org.apache.struts2.convention.annotation.Results;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
@@ -99,6 +100,15 @@ public class ClothDistributeAction extends BaseActionKiosk
 	private Receipt receipt;
 	private Staff staffHandledBy;
 	private Staff staffPickedBy;
+	private Staff staff;
+	
+	public Staff getStaff() {
+		return staff;
+	}
+
+	public void setStaff(Staff staff) {
+		this.staff = staff;
+	}
 	private Integer receiptClothTotal;
 	
 	// Handheld Handler
@@ -126,7 +136,7 @@ public class ClothDistributeAction extends BaseActionKiosk
 	{
 		this.kioskName = this.getServletRequest().getParameter(KIOSK_NAME);	// get Kiosk Name from URL
 		//System.out.println( "get " + kioskName + "-Cloth-Dist Page!" );
-		
+
 		this.setupKioskMainPage(this.kioskName);
 		
 		this.setTilesKey("cloth-distribute.main");
@@ -293,14 +303,22 @@ public class ClothDistributeAction extends BaseActionKiosk
 		try
 		{
 			
+			if ("".equals(staff.getCode())){
+				addActionError( getText ("errors.staff.code.required") );
+			}
+			
+			staff = getStaffByCode(staff.getCode());
+			
 			String receiptCode = this.getGeneralService().genKioskClothDistributeReceiptCode();
 			this.receipt = new Receipt();
 			this.receipt.setCode(receiptCode);
 			
-			Staff staff = getStaffByCard("11004");
+			Staff handledBy = getStaffByCard("99999");
 			
-			UserDetails userDetails = getSystemService().loadUserByUsername(BaseActionSecurity.AdminUserName);
-			Users kioskUser = (Users) userDetails;
+//			UserDetails userDetails = getSystemService().loadUserByUsername(BaseActionSecurity.AdminUserName);
+			
+			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			Users user = (Users) userDetails;
 			
 			CustomLazyHandler<Cloth> customLazyHandler = getClothDefaultLazyHandler();
 			
@@ -315,7 +333,7 @@ public class ClothDistributeAction extends BaseActionKiosk
 				Cloth cloth = itCloth.next();
 				cloth.setClothStatus(ClothStatus.Using);
 				cloth.setLastReceiptCode(receipt.getCode());
-				cloth.setModifiedBy(kioskUser);
+				cloth.setModifiedBy(user);
 				cloth.setZone(null);
 			}
 			
@@ -323,9 +341,9 @@ public class ClothDistributeAction extends BaseActionKiosk
 			receipt.setReceiptType(ReceiptType.Distribute);
 			receipt.setReceiptStatus(ReceiptStatus.Finished);	// no processing status (by Kitz)
 			receipt.setClothSet( clothSet );
-			receipt.setStaffHandledBy(staff);
+			receipt.setStaffHandledBy(handledBy);
 			receipt.setStaffPickedBy(staff);
-			receipt.setCreatedBy(kioskUser);
+			receipt.setCreatedBy(user);
 			
 			Calendar now = Calendar.getInstance();
 			distributeDate.set(Calendar.HOUR, now.get(Calendar.HOUR));

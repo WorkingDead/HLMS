@@ -204,7 +204,13 @@ public class GeneralServiceImpl extends BaseCRUDDaosServiceImpl implements Gener
 			///////////////////////////////////////////////////
 			// Cloth Dist (Kiosk User)
 			///////////////////////////////////////////////////
+			
 			Users createdByUser = (Users) this.systemService.loadUserByUsername( BaseActionKiosk.KioskUserName );
+			
+			if (receipt.getCreatedBy() != null){
+				createdByUser = receipt.getCreatedBy();
+			}
+			
 			itCloth = receipt.getClothSet().iterator();
 			while (itCloth.hasNext())
 			{

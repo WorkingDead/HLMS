@@ -131,6 +131,14 @@ public class StaffAction extends BaseActionMaster
 	private List<Long> voidClothIdList;		// clothes that will change status to VOID
 	private Cloth cloth;
 	
+	private StaffStatus defaultStatus = StaffStatus.Normal;
+	public StaffStatus getDefaultStatus() {
+		return defaultStatus;
+	}
+
+	public void setDefaultStatus(StaffStatus defaultStatus) {
+		this.defaultStatus = defaultStatus;
+	}
 	// Services
 	private MasterService masterService;
 	
