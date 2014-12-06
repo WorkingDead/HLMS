@@ -4,9 +4,10 @@
 <style>
 .start-button{
 	/* style for start button */
-    width: 110px;
-    height: 90px;
-    font-size: 20px;
+    width: 400px;
+    height:300px;
+    font-size: 50px;
+    text-align:center;
     margin:0 0;
 }
 .cancel-button{
@@ -34,7 +35,7 @@
 			<div style="width: 100%">
 				
 			
-				<div style="text-align: left; width: 500px; float: left;">
+				<div style="text-align: left; width: 500px; float: left; display: none;">
 					<ul>
 						<li>
 							<label for="receipt.code"><s:text name="receipt.code"/>:</label>

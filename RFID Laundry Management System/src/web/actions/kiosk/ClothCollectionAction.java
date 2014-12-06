@@ -137,7 +137,7 @@ public class ClothCollectionAction extends BaseActionKiosk
 		receipt.setCode(receiptCode);
 		
 		staff = new Staff();
-		staff.setCardNumber("00011004");
+		staff.setCardNumber("00099999");
 		
 		clothTotal = 0;
 	}
