@@ -183,11 +183,11 @@ public class StaffDataSynScheduler {
 					Department department = getDeptRecordBySrvdsc( stf.getSRVDSC() );
 					
 					if(department == null){
-						department = addDepartment(stf.getSRVDSC(), stf.getCSRVDSC());
+						if(getDeptRecordByCsrvdsc(stf.getCSRVDSC()) == null){
+							department = addDepartment(stf.getSRVDSC(), stf.getCSRVDSC());
+						}
 					}
 					staff.setDept( department );
-
-
 
 					StaffStatus stfStaffStatus = isStfstsValid( stf.getSTFSTS() ).getStaffStatus();
 					if ( stfStaffStatus == StaffStatus.Leave ) {
@@ -255,14 +255,14 @@ public class StaffDataSynScheduler {
 					staff.setNameCht( stf.getSTFCNM() );
 					staff.setNameEng( stf.getSTFNAM() );
 
-
-
 					if ( staff.getDept().getNameEng().equals( stf.getSRVDSC() ) ) {
 					}
 					else {
 						Department department = getDeptRecordBySrvdsc( stf.getSRVDSC() );
 						if(department == null){
-							department = addDepartment(stf.getSRVDSC(), stf.getCSRVDSC());
+							if(getDeptRecordByCsrvdsc(stf.getCSRVDSC()) == null){
+								department = addDepartment(stf.getSRVDSC(), stf.getCSRVDSC());
+							}
 						}
 						
 						staff.setDept( department );
@@ -619,12 +619,38 @@ public class StaffDataSynScheduler {
 		if(deptList.size() == 1){
 			return deptList.get(0);
 		}else{
-			String errorMessage = "Create department Failed";
-			Exception exception = new Exception( errorMessage );
-			log.error("addDepartment: When SRVDSC = " + srvdsc);
-			log.error("addDepartment: " + errorMessage, exception);
+			StfOpe stfOpe = StfOpe.FAILO;
+			Exception exception = new Exception( stfOpe.toString() );
+			log.error("addDepartment: When SRVDSC = " + srvdsc + ", CSRVDSC = " + csrvdsc);
+			log.error("addDepartment: " + stfOpe.getDescription(), exception);
 			throw exception;
 		}
 		
 	}
+	
+public Department getDeptRecordByCsrvdsc(final String csrvdsc) throws Exception {
+		
+		List<Department> deptList = masterService.findByExample(Department.class, null, null, null, 
+
+				new CustomCriteriaHandler<Department>() {
+					@Override
+					public void makeCustomCriteria(Criteria criteria) {
+						criteria.add( Restrictions.eq("nameCht", csrvdsc) );
+					}
+				}
+				
+				, null, null);
+
+		if ( deptList.size() > 0 ){
+			StfOpe stfOpe = StfOpe.FAILQ;
+			Exception exception = new Exception( stfOpe.toString() );
+			log.error("getDeptRecordByCsrvdsc: When CSRVDSC = " + csrvdsc);
+			log.error("getDeptRecordByCsrvdsc: " + stfOpe.getDescription(), exception);
+			throw exception;
+		}else {
+			log.info("getDeptRecordByCsrvdsc: When CSRVDSC = " + csrvdsc +  ", it is not exist in DB!" );
+			return null;
+		}
+	}
+	
 }

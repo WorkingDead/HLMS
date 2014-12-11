@@ -52,7 +52,10 @@ public class Stf implements Serializable {
 		FAILM("Has the same STFCRD value in database."),
 		FAILN("Nothing found in database for STF."),
 		FAILO("New staff cannot be 'Leave' status."),
-		FAILP("STFCRD is null but temp num generation fails. Please retry");
+		FAILP("STFCRD is null but temp num generation fails. Please retry"),
+		
+		FAILQ("CSRVDSC already exist"),
+		FAiLO("Create department Failed");
 		
 		private String description;
 		
