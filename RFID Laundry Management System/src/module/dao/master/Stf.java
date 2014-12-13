@@ -55,7 +55,9 @@ public class Stf implements Serializable {
 		FAILP("STFCRD is null but temp num generation fails. Please retry"),
 		
 		FAILQ("CSRVDSC already exist"),
-		FAiLO("Create department Failed");
+		FAiLR("Create department Failed"),
+		FAiLS("CSRVDSC can not be empty");
+		;
 		
 		private String description;
 		

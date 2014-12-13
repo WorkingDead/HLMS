@@ -619,7 +619,7 @@ public class StaffDataSynScheduler {
 		if(deptList.size() == 1){
 			return deptList.get(0);
 		}else{
-			StfOpe stfOpe = StfOpe.FAILO;
+			StfOpe stfOpe = StfOpe.FAiLR;
 			Exception exception = new Exception( stfOpe.toString() );
 			log.error("addDepartment: When SRVDSC = " + srvdsc + ", CSRVDSC = " + csrvdsc);
 			log.error("addDepartment: " + stfOpe.getDescription(), exception);
@@ -628,28 +628,36 @@ public class StaffDataSynScheduler {
 		
 	}
 	
-public Department getDeptRecordByCsrvdsc(final String csrvdsc) throws Exception {
+	public Department getDeptRecordByCsrvdsc(final String csrvdsc) throws Exception {
 		
-		List<Department> deptList = masterService.findByExample(Department.class, null, null, null, 
-
-				new CustomCriteriaHandler<Department>() {
-					@Override
-					public void makeCustomCriteria(Criteria criteria) {
-						criteria.add( Restrictions.eq("nameCht", csrvdsc) );
+		if(csrvdsc != null && !csrvdsc.trim().equals("")){
+			List<Department> deptList = masterService.findByExample(Department.class, null, null, null, 
+	
+					new CustomCriteriaHandler<Department>() {
+						@Override
+						public void makeCustomCriteria(Criteria criteria) {
+							criteria.add( Restrictions.eq("nameCht", csrvdsc) );
+						}
 					}
-				}
-				
-				, null, null);
-
-		if ( deptList.size() > 0 ){
-			StfOpe stfOpe = StfOpe.FAILQ;
+					
+					, null, null);
+	
+			if ( deptList.size() > 0 ){
+				StfOpe stfOpe = StfOpe.FAILQ;
+				Exception exception = new Exception( stfOpe.toString() );
+				log.error("getDeptRecordByCsrvdsc: When CSRVDSC = " + csrvdsc);
+				log.error("getDeptRecordByCsrvdsc: " + stfOpe.getDescription(), exception);
+				throw exception;
+			}else {
+				log.info("getDeptRecordByCsrvdsc: When CSRVDSC = " + csrvdsc +  ", it is not exist in DB!" );
+				return null;
+			}
+		}else{
+			StfOpe stfOpe = StfOpe.FAiLS;
 			Exception exception = new Exception( stfOpe.toString() );
 			log.error("getDeptRecordByCsrvdsc: When CSRVDSC = " + csrvdsc);
 			log.error("getDeptRecordByCsrvdsc: " + stfOpe.getDescription(), exception);
 			throw exception;
-		}else {
-			log.info("getDeptRecordByCsrvdsc: When CSRVDSC = " + csrvdsc +  ", it is not exist in DB!" );
-			return null;
 		}
 	}
 	
